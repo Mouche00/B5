@@ -12,7 +12,7 @@
         <img class="p-2 my-8" src="../../../public/assets/images/logo-white.png" alt="logo-black">
         <div class="w-[70%] m-auto">
             <img class="rounded-xl m-auto" src="../../../public/assets/images/profile.jpg" alt="profile">
-            <h2 class="m-auto">Morgan Freeman</h2>
+            <h2 class="text-center text-xl mt-2">Morgan Freeman</h2>
         </div>
     </section>
     <section class="w-[82.5%] h-full bg-white">
