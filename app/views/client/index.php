@@ -1,53 +1,182 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://kit.fontawesome.com/1a53866afa.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="../../../public/assets/css/client/style.css">
-    <title>Client Dashboard</title>
-</head>
+
+<!-- HEAD -->
+
+<?php include("head.php"); ?>
+
 <body class="flex h-[100vh]">
 
     <!-- SIDEBAR -->
 
-    <section class="w-[17.5%] h-full bg-black text-white">
-        <img class="p-2 my-8" src="../../../public/assets/images/logo-white.png" alt="logo-black">
-        <div class="w-[70%] m-auto mt-16">
-            <img class="rounded-t-lg m-auto" src="../../../public/assets/images/profile.jpg" alt="profile">
-            <h2 class="rounded-b-lg text-center text-xl text-black p-2 font-bold bg-white">Morgan Freeman</h2>
-        </div>
-        <div class="w-[70%] m-auto flex flex-col justify-between mt-10 text-black text-xl">
-            <a href="" class="h-[5vh] bg-white rounded-lg"><button class="w-full flex items-center h-full" type="button"><span class="w-[20%]"><i class="fa-solid fa-table" style="color: #000;"></i></span><span class="h-full border-black border-l-8"></span><span class="w-[80%]">Comptes</span></button></a>
-            <a href="" class="h-[5vh] bg-white rounded-lg mt-10"><button class="w-full flex items-center h-full" type="button"><span class="w-[20%]"><i class="fa-solid fa-arrow-right-arrow-left" style="color: #000;"></i></span><span class="h-full border-black border-l-8"></span><span class="w-[80%]">Transactions</span></button></a>
-        </div>
-    </section>
+    <?php include("sidebar.php"); ?>
 
     <!-- MAIN CONTENT -->
 
-    <section class="w-[82.5%] h-full bg-white">
+    <section class="w-[82.5%] h-full bg-gray-100">
 
         <!-- NAVBAR -->
 
-        <div class="h-[10%] w-full flex justify-end">
-            <div class="w-[10%] flex items-center">
-                <a href="" class="bg-red-500 h-[50%] w-28 flex justify-center items-center rounded-lg text-white font-bold m-auto mt-10"><button type="button">LOG OUT</button></a>
-            </div>
-        </div>
+        <?php include("navbar.php"); ?>
 
         <!-- CARDS -->
 
         <section class="h-[90%] py-2 px-8">
-            <div class="h-[35%] w-[25%] bg-white rounded-2xl border-black border-8 text-white shadow-xl">
-                <div class="h-[20%] bg-black flex justify-center items-center border-black border-b-8">
-                    <h2 class="text-4xl font-bold">Details</h2>
+            
+        <!-- DETAILS -->
+
+            <div class="flex h-[30%] flex justify-evenly">
+                <div class="w-[25%] bg-white rounded-2xl text-black flex">
+                    <div class="w-24 bg-white flex justify-center border-black border-4 rounded-l-lg items-center">
+                        <h2 class="text-4xl font-bold rotate-[-90deg]">Details</h2>
+                    </div>
+                    <div class="h-full w-[80%] bg-black text-white p-[1.5rem] grid grid-cols-2 rounded-r-lg">
+                        <p class="font-extrabold">ID:</p><p>3213213</p>
+                        <p class="font-extrabold">Date:</p><p>22/12/2000</p>
+                        <p class="font-extrabold">Nationalite:</p><p>Deutsch</p>
+                        <p class="font-extrabold">Genre:</p><p>Femme</p>
+                    </div>
                 </div>
-                <div class="h-[80%] text-black p-[1.5rem] grid grid-cols-2 text-center">
-                    <p>ID:</p><p>3213213</p>
-                    <p>Date de naissance:</p><p>22/12/2000</p>
-                    <p>Nationalite:</p><p>Deutsch</p>
-                    <p>Genre:</p><p>Femme</p>
+
+                <div class="w-[30%] h-[75%]">
+                    <div class="h-[30%] bg-black flex justify-center border-black border-4 rounded-t-md items-center text-white">
+                        <h2 class="text-4xl font-bold">Add Transfer</h2>
+                    </div>
+                    <form class="flex flex-col h-[90%] justify-evenly bg-white border-black border-4 rounded-b-md" method="post" action="transferes.php">
+                        <div class="flex justify-evenly items-center h-10">
+                            <label for="montant">Montant: </label>
+                            <input class="bg-gray-200 w-[60%]" type="text" name="montant">
+                        </div>
+                        <div class="flex justify-evenly items-center h-10">
+                            <label for="montant">Compte: </label>
+                            <select class="bg-gray-200 w-[60%]" name="Compte">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                            </select>
+                        </div>
+                        <input class="h-10 w-20 mx-auto bg-green-500 text-white rounded" type="submit" value="Submit">
+                    </form>
+                </div>
+            </div>
+
+            <div class="flex justify-between h-[40%]">
+                <div class="w-[34%] bg-white rounded-2xl text-black mt-20 flex border-black border-4">
+                    <div class="w-24 bg-black flex justify-center border-black border-4 rounded-l-lg items-center text-white">
+                        <h2 class="text-4xl font-bold rotate-[-90deg]">Comptes</h2>
+                    </div>
+                    <div class="h-full w-[80%] bg-white text-black p-[1.5rem] rounded-r-lg m-auto">
+                        <table class="w-full">
+                            <thead class="bg-black text-white">
+                                <tr class="">
+                                    <th class="border-black border-2">ID</th>
+                                    <th class="border-black border-2">Balance</th>
+                                    <th class="border-black border-2">Devise</th>
+                                    <th class="border-black border-2">RIB</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="border-black border-2">99400242</td>
+                                    <td class="border-black border-2">100000</td>
+                                    <td class="border-black border-2">EUR</td>
+                                    <td class="border-black border-2">334324434</td>
+                                </tr>
+                                <tr>
+                                    <td class="border-black border-2">99400242</td>
+                                    <td class="border-black border-2">100000</td>
+                                    <td class="border-black border-2">EUR</td>
+                                    <td class="border-black border-2">334324434</td>
+                                </tr>
+                                <tr>
+                                    <td class="border-black border-2">99400242</td>
+                                    <td class="border-black border-2">100000</td>
+                                    <td class="border-black border-2">EUR</td>
+                                    <td class="border-black border-2">334324434</td>
+                                </tr>
+                                <tr>
+                                    <td class="border-black border-2">99400242</td>
+                                    <td class="border-black border-2">100000</td>
+                                    <td class="border-black border-2">EUR</td>
+                                    <td class="border-black border-2">334324434</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="w-[30%] bg-white rounded-2xl text-black mt-20 flex border-black border-4">
+                    <div class="w-24 bg-black flex justify-center border-black border-4 rounded-l-lg items-center text-white">
+                        <h2 class="text-4xl font-bold rotate-[-90deg]">Transactions</h2>
+                    </div>
+                    <div class="h-full w-[80%] bg-white text-black p-[1.5rem] rounded-r-lg m-auto">
+                        <table class="w-full">
+                            <thead class="bg-black text-white">
+                                <tr class="">
+                                    <th class="border-black border-2">ID</th>
+                                    <th class="border-black border-2">Montant</th>
+                                    <th class="border-black border-2">Type</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="border-black border-2">99400242</td>
+                                    <td class="border-black border-2">100000</td>
+                                    <td class="border-black border-2">Debit</td>
+                                </tr>
+                                <tr>
+                                    <td class="border-black border-2">99400242</td>
+                                    <td class="border-black border-2">100000</td>
+                                    <td class="border-black border-2">Credit</td>
+                                </tr>
+                                <tr>
+                                    <td class="border-black border-2">99400242</td>
+                                    <td class="border-black border-2">100000</td>
+                                    <td class="border-black border-2">Credit</td>
+                                </tr>
+                                <tr>
+                                    <td class="border-black border-2">99400242</td>
+                                    <td class="border-black border-2">100000</td>
+                                    <td class="border-black border-2">Debit</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="w-[30%] bg-white rounded-2xl text-black mt-20 flex border-black border-4">
+                    <div class="w-24 bg-black flex justify-center border-black border-4 rounded-l-lg items-center text-white">
+                        <h2 class="text-4xl font-bold rotate-[-90deg]">Transferes</h2>
+                    </div>
+                    <div class="h-full w-[80%] bg-white text-black p-[1.5rem] rounded-r-lg m-auto">
+                        <table class="w-full">
+                            <thead class="bg-black text-white">
+                                <tr class="">
+                                    <th class="border-black border-2">ID</th>
+                                    <th class="border-black border-2">Montant</th>
+                                    <th class="border-black border-2">Compte</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="border-black border-2">99400242</td>
+                                    <td class="border-black border-2">100000</td>
+                                    <td class="border-black border-2">34234242</td>
+                                </tr>
+                                <tr>
+                                    <td class="border-black border-2">99400242</td>
+                                    <td class="border-black border-2">100000</td>
+                                    <td class="border-black border-2">34234242</td>
+                                </tr>
+                                <tr>
+                                    <td class="border-black border-2">99400242</td>
+                                    <td class="border-black border-2">100000</td>
+                                    <td class="border-black border-2">34234242</td>
+                                </tr>
+                                <tr>
+                                    <td class="border-black border-2">99400242</td>
+                                    <td class="border-black border-2">100000</td>
+                                    <td class="border-black border-2">34234242</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </section>
