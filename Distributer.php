@@ -1,3 +1,10 @@
+
+<?php
+
+    // require_once("./app/");
+
+?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -130,7 +137,7 @@
                             <h3
                                 class="text-orange-600 text-3xl font-bold tracking-widest mb-2"
                             >
-                                Transaction
+                                Distributer
                             </h3>
                             <p class="text-xl">Our Banks around The world</p>
                         </div>
@@ -139,7 +146,7 @@
                                 class="bg-slate-900 text-white w-[160px] h-[50px] rounded-md"
                                 id="addBank"
                             >
-                                Add Transaction
+                                Add Distributer
                             </button>
                         </div>
                     </div>
@@ -148,17 +155,15 @@
                         <table class="w-full table-auto">
                             <thead class="">
                                 <tr class="bg-slate-900 text-white h-[60px]">
-                                    <th class="">TransactionID</th>
-                                    <th class="">Type</th>
-                                    <th class="">Amount</th>
-                                    <th class="">AccountID</th>
+                                    <th class="">ID</th>
+                                    <th class="">Address</th>
+                                    <th class="">BankID</th>
                                     <th class="">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr class="h-[50px]">
+                                <!-- <tr class="h-[50px]">
                                     <td class="text-center">1</td>
-                                    <td class="text-center">Dèbit</td>
                                     <td class="text-center">1961</td>
                                     <td class="text-center">6</td>
                                     <td class="text-center">
@@ -175,18 +180,40 @@
                                             <i class="fa-solid fa-trash"></i>
                                         </button>
                                     </td>
-                                </tr>
+                                </tr> -->
                             </tbody>
                         </table>
                     </div>
-                    <!-- ============ Form to Add Transaction ========= -->
+                    <!-- ============ Form to Add Distributer ========= -->
                     <div>
                         <form
-                            action=""
-                            method="get"
+                            action="./controllers/distributer/add.php"
+                            method="post"
                             class="absolute top-[50%] left-[30%] translate-y-[-50%] bg-white p-5 w-[650px] rounded-md shadow-sm z-50 hidden"
                             id="Add"
                         >
+
+
+                        <div class="w-full">
+                            <label for="" class="text-xl">Address</label>
+                            <input
+                                type="text"
+                                name="address"
+                                class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
+                                placeholder="Enter Code postal "
+                            />
+                        </div>
+
+                        <div class="w-full">
+                            <label for="" class="text-xl">Bank</label>
+                            <select
+                                name="bank"
+                                id=""
+                                class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
+                            >
+                                <!-- <option value="Admin">Admin</option> -->
+                            </select>
+                        </div>
                             
                             <div>
                                 <input
