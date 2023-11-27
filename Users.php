@@ -1,3 +1,19 @@
+<?php
+require_once("app/models/user.php");
+
+$user = new Users();
+
+$user->addUser("username","pass","male","admin","test", "test","test","test","test@gmail.com","000000000");
+
+?>
+
+
+
+
+
+
+
+
 <!DOCTYPE html>
 <html>
   <head>
