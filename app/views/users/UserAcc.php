@@ -1,34 +1,20 @@
 <?php
-require_once("app/models/user.php");
+require_once("../../models/user.php");
+
 
 $user = new Users();
 
+$user_id= $_GET['user_id'];
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  
+$data_acc=$user->displayUserAcc($user_id);
 
-  $username=$_POST['username'];
-  $email=$_POST['email'];
-  $gendre=$_POST['gendre'];
-  $phone=$_POST['phone'];
-  $password=password_hash($_POST['password'], PASSWORD_BCRYPT);
-  $rue=$_POST['rue'];
-  $ville=$_POST['ville'];
-  $quartier=$_POST['quartier'];
-  $agency=$_POST['agency'];
-  $role=$_POST['role'];
-  $postal=$_POST['postal'];
-  
-  $user->addUser($username,$password,$gendre,$role,$ville,$quartier,$rue,$postal,$email,$phone);
-    
-  }
+
 
 // ($username,$pw,$gendre,$role,$ville, $quartier,$rue,$codePostal,$email,$tel)
 
 
-$data_users=$user->displayUser();  
 
-// print_r($data_users);
+print_r($data_acc);
 
 ?>
 
@@ -52,9 +38,9 @@ $data_users=$user->displayUser();
       crossorigin="anonymous"
     ></script>
     <!-- ================ Css Stylesheet ================ -->
-    <link rel="stylesheet" href="public/assets/css/client/admin.css" />
+    <link rel="stylesheet" href="../../../public/assets/css/client/admin.css" />
     <!-- ============ Declaration JS File ============-->
-    <script src="./public/assets/js/dashboard_Admin.js" defer></script>
+    <script src="../../../public/assets/js/dashboard_Admin.js" defer></script>
   </head>
   <body>
     <section class="flex items-center relative">
@@ -63,7 +49,7 @@ $data_users=$user->displayUser();
         <!-- ===== logo ===== -->
         <div>
           <img
-            src="./public/assets/images/logo-white.png"
+            src="../../../public/assets/images/logo-white.png"
             alt="logo"
             class="pt-10"
           />
@@ -72,7 +58,7 @@ $data_users=$user->displayUser();
           <h2 class="text-2xl font-bold my-5 text-white">General</h2>
           <li class="my-2">
             <a
-              href="bank.php"
+              href="../../../bank.html"
               class="text-lg font-medium block w-[full] rounded-md h-[60px] flex items-center text-white p-5 group hover:text-red-500"
             >
               <i
@@ -83,7 +69,7 @@ $data_users=$user->displayUser();
           </li>
           <li class="my-2">
             <a
-              href="Users.php"
+              href="../../../Users.php"
               class="active text-lg font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500 bg-gray-900 bg-opacity-20"
             >
               <i
@@ -94,7 +80,7 @@ $data_users=$user->displayUser();
           </li>
           <li class="my-2">
             <a
-              href="Accounts.html"
+              href="../../../Accounts.html"
               class="text-lg font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500 bg-gray-900 bg-opacity-20"
             >
               <i
@@ -105,7 +91,7 @@ $data_users=$user->displayUser();
           </li>
           <li class="my-2">
             <a
-              href="Transactions.html"
+              href="../../../Transactions.html"
               class="text-lg font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500 bg-gray-900 bg-opacity-20"
             >
               <i
@@ -116,7 +102,7 @@ $data_users=$user->displayUser();
           </li>
           <li class="my-2">
             <a
-              href="Agency.php"
+              href="#"
               class="text-lg font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500 bg-gray-900 bg-opacity-20"
             >
               <i
@@ -127,7 +113,7 @@ $data_users=$user->displayUser();
           </li>
           <li class="my-2">
             <a
-              href="#"
+              href="../../../Distributer.html"
               class="text-lf font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500 bg-gray-900 bg-opacity-20"
             >
               <i
@@ -150,7 +136,7 @@ $data_users=$user->displayUser();
               <span class="text-gray-500 text-md block text-right">Admin</span>
             </div>
             <img
-              src="./public/assets/images/admin.jpg"
+              src="../../../public/assets/images/admin.jpg"
               alt="profile"
               class="w-[60px] h-[60px] rounded-full"
             />
@@ -164,7 +150,7 @@ $data_users=$user->displayUser();
               <h3
                 class="text-orange-600 text-3xl font-bold tracking-widest mb-2"
               >
-                Users
+              <?php echo $data_acc[0]->username?> Accounts
               </h3>
               <p class="text-xl">Our Users around The world</p>
             </div>
@@ -183,10 +169,9 @@ $data_users=$user->displayUser();
               <thead class="">
                 <tr class="bg-slate-900 text-white h-[60px]">
                   <th class="">ID</th>
-                  <th class="">Username</th>
-                  <th class="">Role</th>
-                  <th class="">Email</th>
-
+                  <th class="">Balance</th>
+                  <th class="">RIB</th>
+                  <th class="">User_Id</th>
                   <th class="">Actions</th>
                 </tr>
               </thead>
@@ -195,14 +180,14 @@ $data_users=$user->displayUser();
               
 
               <?php 
-              foreach($data_users as $duser) {
+              foreach($data_acc as $duser) {
               ?>
                 <tr class="h-[50px]">
                
-                  <td class="text-center"><?php echo $duser->userId ?></td>
-                  <td class="text-center"><?php echo $duser->username ?></td>
-                  <td class="text-center"><?php echo $duser->name ?></td>
-                  <td class="text-center"><?php echo $duser->email ?></td>
+                  <td class="text-center"><?php echo $duser->accountId ?></td>
+                  <td class="text-center"><?php echo $duser->balance ?></td>
+                  <td class="text-center"><?php echo $duser->RIB ?></td>
+                  <td class="text-center"><?php echo $duser->username?></td>
                   <td class="text-center">
                     <button
                       class="bg-slate-900 text-white w-[35px] h-[35px] rounded-md"
@@ -210,7 +195,6 @@ $data_users=$user->displayUser();
                     >
                     <a href="app/views/users/updateUser.php?user_id=<?= $duser->userId;?>"> <i class="fa-solid fa-pen"></i></a>
                      
-
                     </button>
                     <button
                       class="bg-slate-900 text-white w-[35px] h-[35px] rounded-md"
@@ -222,7 +206,9 @@ $data_users=$user->displayUser();
                     <button
                       class="bg-slate-900 text-white w-[35px] h-[35px] rounded-md"
                     >
-                    <a href="app/views/users/UserAcc.php?user_id=<?= $duser->userId;?>"><i class="fa-solid fa-file"></i></a>
+                    <a href="app/views/users/UserAcc.php?user_id=<?= $duser->userId;?>">
+                    <i class="fa-solid fa-right-left"></i>
+                </a>
                       
                     </button>
                   </td>
@@ -231,7 +217,6 @@ $data_users=$user->displayUser();
                 <?php 
               }
               ?>
-
               </tbody>
             </table>
           </div>
@@ -240,7 +225,6 @@ $data_users=$user->displayUser();
             <form
               action=""
               method="post"
-
               class="absolute top-[50%] left-[20%] translate-y-[-50%] bg-white p-5 w-[1000px] rounded-md shadow-sm z-50 hidden"
               id="Add"
             >
@@ -279,7 +263,6 @@ $data_users=$user->displayUser();
                   >
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
-
                   </select>
                 </div>
                 <div class="w-[50%]">
@@ -366,7 +349,6 @@ $data_users=$user->displayUser();
                     <option value="">Select Role :</option>
                     <option value="Admin">Admin</option>
                     <option value="Client">Client</option>
-
                   </select>
                 </div>
                 <div class="w-[33%]">
@@ -392,7 +374,6 @@ $data_users=$user->displayUser();
           <!-- ============ Form to add New Users ========= -->
 
           <!-- ============ Form to Update Users ========= -->
-
           <div>
             <form
               action=""
@@ -402,7 +383,6 @@ $data_users=$user->displayUser();
             >
               <h1 class="text-center font-semibold text-3xl my-5">
                 Update User
-
               </h1>
               <div class="flex gap-5">
                 <div class="w-[50%]">
@@ -446,7 +426,6 @@ $data_users=$user->displayUser();
                   />
                 </div>
               </div>
-
               <div class="flex gap-5">
                 <div class="w-[50%]">
                   <label for="" class="text-xl">Password</label>
@@ -539,7 +518,6 @@ $data_users=$user->displayUser();
             </form>
           </div>
           <!-- ============ Form to Update Users ========= -->
-
         </div>
         <!-- ============ Content ============= -->
       </main>
@@ -555,6 +533,5 @@ $data_users=$user->displayUser();
       ></div>
     </section>
     <script src="./public/assets/js/mainUser.js"></script>
-
   </body>
 </html>

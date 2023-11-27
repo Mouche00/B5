@@ -1,17 +1,20 @@
 <?php
-require_once("app/models/user.php");
+require_once("../../models/user.php");
 
 $user = new Users();
+$userup = new Users();
 
+$user_id= $_GET['user_id'];
+
+
+$user_edit=$userup->displayUserOne($user_id);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  
-
   $username=$_POST['username'];
   $email=$_POST['email'];
   $gendre=$_POST['gendre'];
   $phone=$_POST['phone'];
-  $password=password_hash($_POST['password'], PASSWORD_BCRYPT);
+  $password=$_POST['password'];
   $rue=$_POST['rue'];
   $ville=$_POST['ville'];
   $quartier=$_POST['quartier'];
@@ -19,16 +22,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $role=$_POST['role'];
   $postal=$_POST['postal'];
   
-  $user->addUser($username,$password,$gendre,$role,$ville,$quartier,$rue,$postal,$email,$phone);
+  $userup->updateUser($user_id,$username,$password,$gendre,$role,$ville,$quartier,$rue,$postal,$email,$phone);
+header("Location: ../../../../BankFed/Users.php");
+
+
+  
     
   }
 
-// ($username,$pw,$gendre,$role,$ville, $quartier,$rue,$codePostal,$email,$tel)
 
 
 $data_users=$user->displayUser();  
 
-// print_r($data_users);
+
 
 ?>
 
@@ -52,9 +58,9 @@ $data_users=$user->displayUser();
       crossorigin="anonymous"
     ></script>
     <!-- ================ Css Stylesheet ================ -->
-    <link rel="stylesheet" href="public/assets/css/client/admin.css" />
+    <link rel="stylesheet" href="../../../public/assets/css/client/admin.css" />
     <!-- ============ Declaration JS File ============-->
-    <script src="./public/assets/js/dashboard_Admin.js" defer></script>
+    <script src="../../../public/assets/js/dashboard_Admin.js" defer></script>
   </head>
   <body>
     <section class="flex items-center relative">
@@ -63,7 +69,7 @@ $data_users=$user->displayUser();
         <!-- ===== logo ===== -->
         <div>
           <img
-            src="./public/assets/images/logo-white.png"
+            src="../../../public/assets/images/logo-white.png"
             alt="logo"
             class="pt-10"
           />
@@ -72,7 +78,7 @@ $data_users=$user->displayUser();
           <h2 class="text-2xl font-bold my-5 text-white">General</h2>
           <li class="my-2">
             <a
-              href="bank.php"
+              href="../../../bank.html"
               class="text-lg font-medium block w-[full] rounded-md h-[60px] flex items-center text-white p-5 group hover:text-red-500"
             >
               <i
@@ -83,7 +89,7 @@ $data_users=$user->displayUser();
           </li>
           <li class="my-2">
             <a
-              href="Users.php"
+              href="../../../Users.php"
               class="active text-lg font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500 bg-gray-900 bg-opacity-20"
             >
               <i
@@ -94,7 +100,7 @@ $data_users=$user->displayUser();
           </li>
           <li class="my-2">
             <a
-              href="Accounts.html"
+              href="../../../Accounts.html"
               class="text-lg font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500 bg-gray-900 bg-opacity-20"
             >
               <i
@@ -105,7 +111,7 @@ $data_users=$user->displayUser();
           </li>
           <li class="my-2">
             <a
-              href="Transactions.html"
+              href="../../../Transactions.html"
               class="text-lg font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500 bg-gray-900 bg-opacity-20"
             >
               <i
@@ -116,7 +122,7 @@ $data_users=$user->displayUser();
           </li>
           <li class="my-2">
             <a
-              href="Agency.php"
+              href="#"
               class="text-lg font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500 bg-gray-900 bg-opacity-20"
             >
               <i
@@ -127,7 +133,7 @@ $data_users=$user->displayUser();
           </li>
           <li class="my-2">
             <a
-              href="#"
+              href="../../../Distributer.html"
               class="text-lf font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500 bg-gray-900 bg-opacity-20"
             >
               <i
@@ -150,7 +156,7 @@ $data_users=$user->displayUser();
               <span class="text-gray-500 text-md block text-right">Admin</span>
             </div>
             <img
-              src="./public/assets/images/admin.jpg"
+              src="../../../public/assets/images/admin.jpg"
               alt="profile"
               class="w-[60px] h-[60px] rounded-full"
             />
@@ -186,7 +192,6 @@ $data_users=$user->displayUser();
                   <th class="">Username</th>
                   <th class="">Role</th>
                   <th class="">Email</th>
-
                   <th class="">Actions</th>
                 </tr>
               </thead>
@@ -206,23 +211,15 @@ $data_users=$user->displayUser();
                   <td class="text-center">
                     <button
                       class="bg-slate-900 text-white w-[35px] h-[35px] rounded-md"
-                      
+                      onclick="updateForm()"
                     >
-                    <a href="app/views/users/updateUser.php?user_id=<?= $duser->userId;?>"> <i class="fa-solid fa-pen"></i></a>
+                    <a href="../../../app/views/users/updateUser.php?user_id=<?= $duser->userId;?>"> <i class="fa-solid fa-pen"></i></a>
                      
-
                     </button>
                     <button
                       class="bg-slate-900 text-white w-[35px] h-[35px] rounded-md"
                     >
-                    <a href="app/views/users/deleteUser.php?user_id=<?= $duser->userId;?>"><i class="fa-solid fa-trash"></i></a>
-                      
-                    </button>
-
-                    <button
-                      class="bg-slate-900 text-white w-[35px] h-[35px] rounded-md"
-                    >
-                    <a href="app/views/users/UserAcc.php?user_id=<?= $duser->userId;?>"><i class="fa-solid fa-file"></i></a>
+                    <a href="../../../app/views/users/deleteUser.php?user_id=<?= $duser->userId;?>"><i class="fa-solid fa-trash"></i></a>
                       
                     </button>
                   </td>
@@ -231,7 +228,6 @@ $data_users=$user->displayUser();
                 <?php 
               }
               ?>
-
               </tbody>
             </table>
           </div>
@@ -240,7 +236,6 @@ $data_users=$user->displayUser();
             <form
               action=""
               method="post"
-
               class="absolute top-[50%] left-[20%] translate-y-[-50%] bg-white p-5 w-[1000px] rounded-md shadow-sm z-50 hidden"
               id="Add"
             >
@@ -279,7 +274,6 @@ $data_users=$user->displayUser();
                   >
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
-
                   </select>
                 </div>
                 <div class="w-[50%]">
@@ -366,7 +360,6 @@ $data_users=$user->displayUser();
                     <option value="">Select Role :</option>
                     <option value="Admin">Admin</option>
                     <option value="Client">Client</option>
-
                   </select>
                 </div>
                 <div class="w-[33%]">
@@ -392,17 +385,15 @@ $data_users=$user->displayUser();
           <!-- ============ Form to add New Users ========= -->
 
           <!-- ============ Form to Update Users ========= -->
-
           <div>
             <form
               action=""
-              method="get"
-              class="absolute top-[50%] left-[20%] translate-y-[-50%] bg-white p-5 w-[1000px] rounded-md shadow-sm z-50 hidden"
+              method="post"
+              class="absolute top-[50%] left-[20%] translate-y-[-50%] bg-white p-5 w-[1000px] rounded-md shadow-sm z-50"
               id="Edit"
             >
               <h1 class="text-center font-semibold text-3xl my-5">
                 Update User
-
               </h1>
               <div class="flex gap-5">
                 <div class="w-[50%]">
@@ -412,6 +403,7 @@ $data_users=$user->displayUser();
                     name="username"
                     class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
                     placeholder="Enter Username "
+                    value="<?= $user_edit[0]->username;?>"
                   />
                 </div>
                 <div class="w-[50%]">
@@ -421,6 +413,7 @@ $data_users=$user->displayUser();
                     name="email"
                     class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
                     placeholder="Enter email "
+                    value="<?= $user_edit[0]->email;?>"
                   />
                 </div>
               </div>
@@ -431,6 +424,7 @@ $data_users=$user->displayUser();
                     name="gendre"
                     id="gendre"
                     class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
+                    value="<?= $user_edit[0]->username;?>"
                   >
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
@@ -443,10 +437,10 @@ $data_users=$user->displayUser();
                     name="phone"
                     class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
                     placeholder="Enter Your Phone "
+                    value="<?= $user_edit[0]->tel;?>"
                   />
                 </div>
               </div>
-
               <div class="flex gap-5">
                 <div class="w-[50%]">
                   <label for="" class="text-xl">Password</label>
@@ -455,6 +449,7 @@ $data_users=$user->displayUser();
                     name="password"
                     placeholder="Enter Password"
                     class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
+                    value="<?= $user_edit[0]->pw;?>"
                   />
                 </div>
                 <div class="w-[50%]">
@@ -464,6 +459,7 @@ $data_users=$user->displayUser();
                     name="newpassword"
                     placeholder="Confirm your Password"
                     class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
+                    value="<?= $user_edit[0]->pw;?>"
                   />
                 </div>
               </div>
@@ -475,6 +471,7 @@ $data_users=$user->displayUser();
                     name="rue"
                     class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
                     placeholder="Enter Rue "
+                    value="<?= $user_edit[0]->rue;?>"
                   />
                 </div>
                 <div class="w-full">
@@ -484,6 +481,7 @@ $data_users=$user->displayUser();
                     name="ville"
                     class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
                     placeholder="Enter Ville"
+                    value="<?= $user_edit[0]->ville;?>"
                   />
                 </div>
               </div>
@@ -494,6 +492,7 @@ $data_users=$user->displayUser();
                   name="quartier"
                   class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
                   placeholder="Enter  Quartier "
+                  value="<?= $user_edit[0]->quartier;?>"
                 />
               </div>
 
@@ -515,6 +514,7 @@ $data_users=$user->displayUser();
                     name="role"
                     id=""
                     class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
+                    value="<?= $user_edit[0]->name;?>"
                   >
                     <option value="">Select Role :</option>
                     <option value="Admin">Admin</option>
@@ -527,19 +527,19 @@ $data_users=$user->displayUser();
                     name="postal"
                     class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
                     placeholder="Enter Code postal "
+                    value="<?= $user_edit[0]->codePostal;?>"
                   />
                 </div>
               </div>
 
               <div>
                
-                   <button type="submit" name="edit" value="Edit" class="block w-full py-3 text-white text-xl px-1 cursor-pointer mt-5 outline-none border-none bg-slate-900"><a href="app/views/users/updateUser.php?user_id=">Edit</a></button>
+                   <button type="submit" name="edit" value="Edit" class="block w-full py-3 text-white text-xl px-1 cursor-pointer mt-5 outline-none border-none bg-slate-900">Edit</button>
     
               </div>
             </form>
           </div>
           <!-- ============ Form to Update Users ========= -->
-
         </div>
         <!-- ============ Content ============= -->
       </main>
@@ -549,12 +549,11 @@ $data_users=$user->displayUser();
         id="overlayAdd"
       ></div>
       <div
-        class="bg-black bg-opacity-60 w-full h-[100vh] absolute top-0 left-0 hidden"
+        class="bg-black bg-opacity-60 w-full h-[100vh] absolute top-0 left-0"
         id="overlayEdit"
         onclick="updateForm()"
       ></div>
     </section>
     <script src="./public/assets/js/mainUser.js"></script>
-
   </body>
 </html>
