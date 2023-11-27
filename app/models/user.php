@@ -21,6 +21,7 @@ class Users extends DataProvider {
    
         INSERT INTO adress (ville, quartier,rue,codePostal,email,tel,userId)
         VALUES (:ville, :quartier,:rue,:codePostal,:email,:tel,@userId);
+
    
         COMMIT;';
    $stmt = $db->prepare($sql);

@@ -3,6 +3,7 @@ require_once("app/models/user.php");
 
 $user = new Users();
 
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   
 
@@ -185,6 +186,7 @@ $data_users=$user->displayUser();
                   <th class="">Username</th>
                   <th class="">Role</th>
                   <th class="">Email</th>
+
                   <th class="">Actions</th>
                 </tr>
               </thead>
@@ -208,6 +210,7 @@ $data_users=$user->displayUser();
                     >
                     <a href="app/views/users/updateUser.php?user_id=<?= $duser->userId;?>"> <i class="fa-solid fa-pen"></i></a>
                      
+
                     </button>
                     <button
                       class="bg-slate-900 text-white w-[35px] h-[35px] rounded-md"
@@ -228,6 +231,7 @@ $data_users=$user->displayUser();
                 <?php 
               }
               ?>
+
               </tbody>
             </table>
           </div>
@@ -236,6 +240,7 @@ $data_users=$user->displayUser();
             <form
               action=""
               method="post"
+
               class="absolute top-[50%] left-[20%] translate-y-[-50%] bg-white p-5 w-[1000px] rounded-md shadow-sm z-50 hidden"
               id="Add"
             >
@@ -274,6 +279,7 @@ $data_users=$user->displayUser();
                   >
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
+
                   </select>
                 </div>
                 <div class="w-[50%]">
@@ -360,6 +366,7 @@ $data_users=$user->displayUser();
                     <option value="">Select Role :</option>
                     <option value="Admin">Admin</option>
                     <option value="Client">Client</option>
+
                   </select>
                 </div>
                 <div class="w-[33%]">
@@ -385,6 +392,7 @@ $data_users=$user->displayUser();
           <!-- ============ Form to add New Users ========= -->
 
           <!-- ============ Form to Update Users ========= -->
+
           <div>
             <form
               action=""
@@ -394,6 +402,7 @@ $data_users=$user->displayUser();
             >
               <h1 class="text-center font-semibold text-3xl my-5">
                 Update User
+
               </h1>
               <div class="flex gap-5">
                 <div class="w-[50%]">
@@ -437,6 +446,7 @@ $data_users=$user->displayUser();
                   />
                 </div>
               </div>
+
               <div class="flex gap-5">
                 <div class="w-[50%]">
                   <label for="" class="text-xl">Password</label>
@@ -529,6 +539,7 @@ $data_users=$user->displayUser();
             </form>
           </div>
           <!-- ============ Form to Update Users ========= -->
+
         </div>
         <!-- ============ Content ============= -->
       </main>
@@ -544,5 +555,6 @@ $data_users=$user->displayUser();
       ></div>
     </section>
     <script src="./public/assets/js/mainUser.js"></script>
+
   </body>
 </html>
