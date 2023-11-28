@@ -74,7 +74,7 @@ WHERE users.adrId = adress.adrId
 
 
 
-public function updateUser($id,$username,$pw,$gendre,$role,$ville, $quartier,$rue,$codePostal,$email,$tel) {
+public function updateUser($id,$username,$pw,$gendre,$roleName,$ville, $quartier,$rue,$codePostal,$email,$phone) {
       
     $db = $this->connect();
 
@@ -83,8 +83,8 @@ public function updateUser($id,$username,$pw,$gendre,$role,$ville, $quartier,$ru
     }
 
     $sql = "UPDATE users SET username = :username, pw = :pw, gendre = :gendre  WHERE userId = :id;
-    UPDATE adress SET ville = :ville, quartier = :quartier, rue = :rue, codePostal= :codePostal , email=:email , tel= :tel WHERE userId = :id ;
-    UPDATE roleofuser SET name = :role WHERE userId = :id ;";
+    UPDATE adress SET ville = :ville, quartier = :quartier, rue = :rue, codePostal= :codePostal , email=:email , phone= :phone WHERE adrId IN (SELECT adrId FROM users WHERE userId = :id); ;
+    UPDATE roleofuser SET roleName = :roleName WHERE userId = :id ;";
 
     $stmt = $db->prepare($sql);
 
@@ -93,13 +93,13 @@ public function updateUser($id,$username,$pw,$gendre,$role,$ville, $quartier,$ru
     ':username'=> $username,
     ":pw" => $pw,
     ":gendre" => $gendre,
-    ":role" => $role,
+    ":roleName" => $roleName,
     ":ville"=> $ville,
     ":quartier"=> $quartier,
     ":rue"=> $rue,
     ":codePostal"=> $codePostal,
     ":email"=> $email,
-    ":tel"=> $tel
+    ":phone"=> $phone
        ]);
 
     $smt = null;
@@ -122,8 +122,10 @@ public function displayUserOne($id){
    roleofuser.*
 FROM users
 JOIN roleofuser ON users.userId = roleofuser.userId
-JOIN adress ON users.userId = adress.userId
-WHERE users.userId = :id;';
+JOIN adress ON users.adrid = adress.adrid
+WHERE users.userId = :id;
+
+';
 
 $stmt = $db->prepare($query);
 $stmt->execute([
@@ -170,22 +172,6 @@ public function deleteUser($id) {
 
 
 
-public function getUserByUsername($username){
-    $db = $this->connect();
-    $fetchUserQuery = "select * from users where username = :username";
-    $stmt = $db->prepare($fetchUserQuery);
-    $stmt->bindParam(":username",$username,PDO::PARAM_STR);
-
-    try{
-        $stmt->execute();
-        $userData = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $userData;
-    }
-    catch(PDOException $e){
-        die("invalid search query ". $e->getMessage());
-    }
-}
-
 
 
 public function displayUserAcc($id){
@@ -214,7 +200,12 @@ $stmt->execute([
 
 
 
-
 }
+
+
+
+
+
+
 
 ?>
