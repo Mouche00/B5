@@ -1,8 +1,10 @@
 <?php
-require_once("app/models/agency.php");
+require_once("../../models/agency.php");
+require_once("../../models/bank.php");
+
 
 $agence = new Agency();
-
+$bankk = new bank();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $longitude=$_POST['longitude'];
   $email=$_POST['email'];
@@ -21,10 +23,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 // ($username,$pw,$gendre,$role,$ville, $quartier,$rue,$codePostal,$email,$tel)
 
+$bankdata=$bankk->displayBank();
 
-$data_agence=$agence->displayAgency();  
+$data_agence=$agence->displayAgency();
 
-// print_r($data_agence);
+// var_dump($data_agence);
+// echo '<br>';
+// var_dump($bankdata);
+
 
 ?>
 <!DOCTYPE html>
@@ -40,9 +46,9 @@ $data_agence=$agence->displayAgency();
             crossorigin="anonymous"
         ></script>
         <!-- ================ Css Stylesheet ================ -->
-        <link rel="stylesheet" href="public/assets/css/client/admin.css" />
+        <link rel="stylesheet" href="../../../public/assets/css/client/admin.css" />
         <!-- ============ Declaration JS File ============-->
-        <script src="./public/assets/js/dashboard_Admin.js" defer></script>
+        <script src="../../../public/assets/js/dashboard_Admin.js" defer></script>
     </head>
     <body>
         <section class="flex items-center relative">
@@ -51,7 +57,7 @@ $data_agence=$agence->displayAgency();
                 <!-- ===== logo ===== -->
                 <div>
                     <img
-                        src="./public/assets/images/logo-white.png"
+                        src="../../../public/assets/images/logo-white.png"
                         alt="logo"
                         class="pt-10"
                     />
@@ -60,7 +66,7 @@ $data_agence=$agence->displayAgency();
                     <h2 class="text-2xl font-bold my-5 text-white">General</h2>
                     <li class="my-2">
                         <a
-                            href="bank.html"
+                            href="bank.php"
                             class="text-lg font-medium block w-[full] rounded-md h-[60px] flex text-white items-center p-5 group hover:text-red-500"
                         >
                             <i
@@ -71,7 +77,7 @@ $data_agence=$agence->displayAgency();
                     </li>
                     <li class="my-2">
                         <a
-                            href="Users.html"
+                            href="Users.php"
                             class="text-lg font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500"
                         >
                             <i
@@ -82,7 +88,7 @@ $data_agence=$agence->displayAgency();
                     </li>
                     <li class="my-2">
                         <a
-                            href="Accounts.html"
+                            href="Accounts.php"
                             class="text-lg font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500"
                         >
                             <i
@@ -93,7 +99,7 @@ $data_agence=$agence->displayAgency();
                     </li>
                     <li class="my-2">
                         <a
-                            href="Transactions.html"
+                            href="Transactions.php"
                             class="font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500"
                         >
                             <i class="fa-solid"></i>
@@ -116,7 +122,7 @@ $data_agence=$agence->displayAgency();
                     </li>
                     <li class="my-2">
                         <a
-                            href="Distributer.html"
+                            href="Distributer.php"
                             class="text-lf font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500 bg-gray-900 bg-opacity-20"
                         >
                             <i
@@ -145,7 +151,7 @@ $data_agence=$agence->displayAgency();
                             >
                         </div>
                         <img
-                            src="./public/assets/images/admin.jpg"
+                            src="../../../public/assets/images/admin.jpg"
                             alt="profile"
                             class="w-[60px] h-[60px] rounded-full"
                         />
@@ -198,14 +204,14 @@ $data_agence=$agence->displayAgency();
                       class="bg-slate-900 text-white w-[35px] h-[35px] rounded-md"
                       
                     >
-                    <a href="app/views/agency/updateAgency.php?agence_id=<?= $dagence->agencyId;?>"> <i class="fa-solid fa-pen"></i></a>
+                    <a href="../../../app/views/agency/updateAgency.php?agence_id=<?= $dagence->agencyId;?>"> <i class="fa-solid fa-pen"></i></a>
                      
                     </button>
                                         <button
                                             class="bg-slate-900 text-white w-[35px] h-[35px] rounded-md"
                                             id="addBank"
                                         >
-                                        <a href="app/views/agency/deleteAgency.php?agency_id=<?= $dagence->agencyId;?>"><i class="fa-solid fa-trash"></i></a>
+                                        <a href="../../../app/views/agency/deleteAgency.php?agency_id=<?= $dagence->agencyId;?>"><i class="fa-solid fa-trash"></i></a>
                                         </button>
                                     </td>
                                 </tr>
@@ -307,8 +313,13 @@ $data_agence=$agence->displayAgency();
                     class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
                   >
                  
-                    <option value="1">Cih</option>
-                    <option value="2">Bank Populaire</option>
+                  <?php 
+                                            foreach($bankdata as $data) {
+                                                echo "
+                                                <option value='$data->bankId'>$data->name</option>
+                                                ";
+                                            }
+                                        ?>
                   </select>
                 </div>
                 <div class="w-[50%]">

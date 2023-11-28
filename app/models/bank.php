@@ -1,18 +1,17 @@
 <?php
 
-require_once('data_provider.php');
+require_once('DataProvider.php');
 
 class bank extends DataProvider {
-   public function addBank($nom, $logo){
+   public function addBank($name){
     $db=$this->connect();
     if($db==null){
         return null;
    }
-   $sql= 'INSERT INTO bank (nom,logo) VALUES(:nom,:logo)';
+   $sql= 'INSERT INTO bank (name,logo) VALUES(:name,"../../../public/assets/images/logo-black.png")';
    $stmt = $db->prepare($sql);
    $stmt->execute([
-    ":nom" => $nom,
-    ":logo" => $logo
+    ":name" => $name
    ]);
    $db=null;
    $stmt=null;
@@ -38,7 +37,7 @@ public function displayBank(){
 
 
 
-public function updateBank($id,$nom, $logo) {
+public function updateBank($bankId,$name) {
       
     $db = $this->connect();
 
@@ -46,21 +45,20 @@ public function updateBank($id,$nom, $logo) {
         return;
     }
 
-    $sql = "UPDATE bank SET nom = :nom, logo = :logo, WHERE id = :id";
+    $sql = "UPDATE bank SET name = :name WHERE bankId = :bankId";
 
     $stmt = $db->prepare($sql);
 
     $stmt->execute([
-    ':nom'=> $nom,
-    ":logo" => $logo,
-    ":id" => $id
+    ':name'=> $name,
+    ":bankId" => $bankId
        ]);
 
     $stmt = null;
     $db = null;
 }
 
-public function deleteBank($id) {
+public function deleteBank($bankId) {
   
     $db = $this->connect();
 
@@ -68,12 +66,12 @@ public function deleteBank($id) {
         return;
     }
 
-    $sql = "DELETE FROM bank WHERE id = :id";
+    $sql = "DELETE FROM bank WHERE bankId = :bankId";
 
     $smt = $db->prepare($sql);
 
     $smt->execute([
-        ":id" => $id
+        ":bankId" => $bankId
     ]);
 
     $smt = null;

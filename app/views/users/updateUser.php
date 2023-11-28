@@ -22,8 +22,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $role=$_POST['role'];
   $postal=$_POST['postal'];
   
-  $userup->updateUser($user_id,$username,$password,$gendre,$role,$ville,$quartier,$rue,$postal,$email,$phone);
-header("Location: ../../../../BankFed/Users.php");
+  $userup->updateUser($user_id,$username,$password,$gendre,$agency,$role,$ville,$quartier,$rue,$postal,$email,$phone);
+header("Location: ../../views/admin/users.php");
 
 
   
@@ -33,6 +33,8 @@ header("Location: ../../../../BankFed/Users.php");
 
 
 $data_users=$user->displayUser();  
+
+
 
 
 
@@ -78,7 +80,7 @@ $data_users=$user->displayUser();
           <h2 class="text-2xl font-bold my-5 text-white">General</h2>
           <li class="my-2">
             <a
-              href="../../../bank.html"
+              href="../admin/bank.php"
               class="text-lg font-medium block w-[full] rounded-md h-[60px] flex items-center text-white p-5 group hover:text-red-500"
             >
               <i
@@ -89,7 +91,7 @@ $data_users=$user->displayUser();
           </li>
           <li class="my-2">
             <a
-              href="../../../Users.php"
+              href="../admin/Users.php"
               class="active text-lg font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500 bg-gray-900 bg-opacity-20"
             >
               <i
@@ -100,7 +102,7 @@ $data_users=$user->displayUser();
           </li>
           <li class="my-2">
             <a
-              href="../../../Accounts.html"
+              href="../admin/Accounts.php"
               class="text-lg font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500 bg-gray-900 bg-opacity-20"
             >
               <i
@@ -111,7 +113,7 @@ $data_users=$user->displayUser();
           </li>
           <li class="my-2">
             <a
-              href="../../../Transactions.html"
+              href="../admin/Transactions.php"
               class="text-lg font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500 bg-gray-900 bg-opacity-20"
             >
               <i
@@ -122,7 +124,7 @@ $data_users=$user->displayUser();
           </li>
           <li class="my-2">
             <a
-              href="#"
+              href="../admin/Agency.php"
               class="text-lg font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500 bg-gray-900 bg-opacity-20"
             >
               <i
@@ -133,7 +135,7 @@ $data_users=$user->displayUser();
           </li>
           <li class="my-2">
             <a
-              href="../../../Distributer.html"
+              href="../admin/Distributer.php"
               class="text-lf font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500 bg-gray-900 bg-opacity-20"
             >
               <i
@@ -206,7 +208,7 @@ $data_users=$user->displayUser();
                
                   <td class="text-center"><?php echo $duser->userId ?></td>
                   <td class="text-center"><?php echo $duser->username ?></td>
-                  <td class="text-center"><?php echo $duser->name ?></td>
+                  <td class="text-center"><?php echo $duser->roleName ?></td>
                   <td class="text-center"><?php echo $duser->email ?></td>
                   <td class="text-center">
                     <button
@@ -437,7 +439,7 @@ $data_users=$user->displayUser();
                     name="phone"
                     class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
                     placeholder="Enter Your Phone "
-                    value="<?= $user_edit[0]->tel;?>"
+                    value="<?= $user_edit[0]->phone;?>"
                   />
                 </div>
               </div>
@@ -449,7 +451,7 @@ $data_users=$user->displayUser();
                     name="password"
                     placeholder="Enter Password"
                     class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
-                    value="<?= $user_edit[0]->pw;?>"
+                  
                   />
                 </div>
                 <div class="w-[50%]">
@@ -459,7 +461,7 @@ $data_users=$user->displayUser();
                     name="newpassword"
                     placeholder="Confirm your Password"
                     class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
-                    value="<?= $user_edit[0]->pw;?>"
+                    
                   />
                 </div>
               </div>
@@ -504,8 +506,13 @@ $data_users=$user->displayUser();
                     id=""
                     class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
                   >
-                    <option value="">Select Agency :</option>
-                    <option value="Center Ville">Center Ville</option>
+                  <?php 
+                                            foreach($user_edit as $user) {
+                                                echo "
+                                                <option value='$user->agencyId'>$user->agencyId</option>
+                                                ";
+                                            }
+                                        ?>
                   </select>
                 </div>
                 <div class="w-[33%]">

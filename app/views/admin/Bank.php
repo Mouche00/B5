@@ -1,3 +1,13 @@
+
+<?php
+
+    require_once("../../controllers/bank/controller.php");
+
+    // var_dump($banks);
+
+?>
+
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -11,9 +21,9 @@
             crossorigin="anonymous"
         ></script>
         <!-- ================ Css Stylesheet ================ -->
-        <link rel="stylesheet" href="public/assets/css/client/admin.css" />
+        <link rel="stylesheet" href="../../../public/assets/css/client/admin.css" />
         <!-- ============ Declaration JS File ============-->
-        <script src="./public/assets/js/dashboard_Admin.js" defer></script>
+        <script src="../../../public/assets/js/dashboard_Admin.js" defer></script>
     </head>
     <body>
         <section class="flex items-center relative">
@@ -22,7 +32,7 @@
                 <!-- ===== logo ===== -->
                 <div>
                     <img
-                        src="./public/assets/images/logo-white.png"
+                        src="../../../public/assets/images/logo-white.png"
                         alt="logo"
                         class="pt-10"
                     />
@@ -31,7 +41,7 @@
                     <h2 class="text-2xl font-bold my-5 text-white">General</h2>
                     <li class="my-2">
                         <a
-                            href="bank.html"
+                            href="bank.php"
                             class="active text-lg font-medium block w-[full] rounded-md h-[60px] flex items-center bg-white p-5 group hover:text-red-500 bg-gray-900 bg-opacity-20"
                         >
                             <i
@@ -42,7 +52,7 @@
                     </li>
                     <li class="my-2">
                         <a
-                            href="Users.html"
+                            href="Users.php"
                             class="text-lg font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500 bg-gray-900 bg-opacity-20"
                         >
                             <i
@@ -53,7 +63,7 @@
                     </li>
                     <li class="my-2">
                         <a
-                            href="Accounts.html"
+                            href="Accounts.php"
                             class="text-lg font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500 bg-gray-900 bg-opacity-20"
                         >
                             <i
@@ -64,7 +74,7 @@
                     </li>
                     <li class="my-2">
                         <a
-                            href="Transactions.html"
+                            href="Transactions.php"
                             class="text-lg font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500 bg-gray-900 bg-opacity-20"
                         >
                         <i class="fa-solid "></i>
@@ -76,7 +86,7 @@
                     </li>
                     <li class="my-2">
                         <a
-                            href="Agency.html"
+                            href="Agency.php"
                             class="text-lg font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500 bg-gray-900 bg-opacity-20"
                         >
                             <i
@@ -87,7 +97,7 @@
                     </li>
                     <li class="my-2">
                         <a
-                            href="Distributer.html"
+                            href="Distributer.php"
                             class="text-lf font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500 bg-gray-900 bg-opacity-20"
                         >
                             <i
@@ -117,7 +127,7 @@
                             >
                         </div>
                         <img
-                            src="./public/assets/images/admin.jpg"
+                            src="../../../public/assets/images/admin.jpg"
                             alt="profile"
                             class="w-[60px] h-[60px] rounded-full"
                         />
@@ -153,33 +163,30 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <?php foreach($banks as $bank): ?>
                                 <tr class="h-[50px]">
-                                    <td class="text-center">1</td>
-                                    <td class="text-center">CIH Bank</td>
-                                    <td class="text-center">1961</td>
+                                    <td class="text-center"><?=$bank->bankId?></td>
+                                    <td class="text-center"><?=$bank->name?></td>
+                                    <td class="text-center" style="width: 25%;"><img src="<?=$bank->logo?>" alt="" width="200"></td>
                                     <td class="text-center">
-                                        <button class="bg-slate-900 text-white w-[35px] h-[35px] rounded-md" onclick="updateForm()">
-                                            <i class="fa-solid fa-pen"></i>
+                                        <button class="bg-slate-900 text-white w-[35px] h-[35px] rounded-md" onclick="">
+                                            <a href=<?php echo "Bank.php?id=" . $bank->bankId ?>><i class="fa-solid fa-pen"></i></a>
                                         </button>
                                         <button class="bg-slate-900 text-white w-[35px] h-[35px] rounded-md" id="addBank">
-                                            <i class="fa-solid fa-trash"></i>
+                                            <a href=<?php echo "../../controllers/bank/controller.php?bankId=" . $bank->bankId ?>><i class="fa-solid fa-trash"></i></a>
                                         </button>
                                     </td>
                                 </tr>
-
+                                <?php endforeach; ?>
                             </tbody>
                         </table>
                     </div>
                     <!-- ============ Form to add New Bank ========= -->
                     <div>
-                        <form action="" method="get" class="absolute top-[50%] left-[30%] translate-y-[-50%] bg-white p-5 w-[650px] rounded-md shadow-sm z-50 hidden" id="Add">
+                        <form action="../../controllers/bank/controller.php" method="post" class="absolute top-[50%] left-[30%] translate-y-[-50%] bg-white p-5 w-[650px] rounded-md shadow-sm z-50 hidden" id="Add">
                             <div>
                                 <label for="" class="text-xl ">Denomination</label>
-                                <input type="text" name="namebank"  class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100" placeholder="Enter Dènomination ">
-                            </div>
-                            <div>
-                                <label for="" class="text-xl ">Logo of bank</label>
-                                <input type="file" name="logobank"  class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100" >
+                                <input type="text" name="name"  class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100" placeholder="Enter Dènomination ">
                             </div>
                             <div>
                                 <input type="submit" name="submit"  class="block w-full py-3 text-white text-xl px-1 cursor-pointer my-2 outline-none border-none bg-slate-900">
@@ -190,19 +197,24 @@
 
                     <!-- ============ Form to Edit Bank ========= -->
                     <div>
-                        <form action="" method="get" class="absolute top-[50%] left-[30%] translate-y-[-50%] bg-white p-5 w-[650px] rounded-md shadow-sm z-50 hidden" id="Edit">
-                            <div>
-                                <label for="" class="text-xl ">Denomination</label>
-                                <input type="text" name="namebank"  class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100" placeholder="Enter Dènomination ">
-                            </div>
-                            <div>
-                                <label for="" class="text-xl ">Logo of bank</label>
-                                <input type="file" name="logobank"  class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100" placeholder="Enter Dènomination ">
-                            </div>
-                            <div>
-                                <input type="submit" name="edit" value="Edit"  class="block w-full py-3 text-white text-xl px-1 cursor-pointer my-2 outline-none border-none bg-slate-900" placeholder="Enter Dènomination ">
-                            </div>
-                        </form>
+                        <?php if(isset($_GET['id'])) { ?>
+                            <form action="../../controllers/bank/controller.php" method="post" class="absolute top-[50%] left-[30%] translate-y-[-50%] bg-white p-5 w-[650px] rounded-md shadow-sm z-50" id="Edit">
+                                <div>
+                                    <?php foreach($banks as $bank): ?>
+                                        <?php if($bank->bankId == $_GET['id']){ ?>
+                                            <label for="" class="text-xl ">Denomination</label>
+                                            <input type="text" name="name"  class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100" value=<?=$bank->name?>>
+                                            <input type="text" name="id"  class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100 hidden" value=<?=$bank->bankId?>>
+                                        <?php } ?>
+                                    <?php endforeach; ?>
+                                    <input type="text" name="mode"  class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100 hidden" value="edit" >
+
+                                </div>
+                                <div>
+                                    <input type="submit" name="submit" value="Edit"  class="block w-full py-3 text-white text-xl px-1 cursor-pointer my-2 outline-none border-none bg-slate-900">
+                                </div>
+                            </form>
+                         <?php } ?>
                     </div>
                     <!-- ============ Form Edit Bank ========= -->
                 </div>
@@ -211,7 +223,9 @@
             </main>
             <!-- ========== overlay ================= -->
             <div class="bg-black bg-opacity-60 w-full h-[100vh] absolute top-0 left-0 hidden" id="overlayAdd"></div>
-            <div class="bg-black bg-opacity-60 w-full h-[100vh] absolute top-0 left-0 hidden" id="overlayEdit" onclick="updateForm()"></div>
+            <?php if(isset($_GET['id'])) { ?>
+                <div class="bg-black bg-opacity-60 w-full h-[100vh] absolute top-0 left-0" id="overlayEdit" onclick="updateForm()"></div>
+            <?php } ?>
         </section>
     </body>
 </html>
