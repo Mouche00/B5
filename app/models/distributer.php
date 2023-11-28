@@ -35,7 +35,7 @@
                 $stmt = $this->connect()->prepare($sql);
                 $stmt->bindParam(":id", $id);
                 $stmt->execute();
-                $data = $query->fetchAll(PDO::FETCH_ASSOC);
+                $data = $stmt->fetch(PDO::FETCH_ASSOC);
                 return $data;
             } catch (PDOException $e){
                 die("Error: " . $e->getMessage());
