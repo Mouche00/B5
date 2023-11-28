@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $postal=$_POST['postal'];
   
   $userup->updateUser($user_id,$username,$password,$gendre,$role,$ville,$quartier,$rue,$postal,$email,$phone);
-header("Location: ../../../../BankFed/Users.php");
+header("Location: ../../views/admin/users.php");
 
 
   
@@ -206,7 +206,7 @@ $data_users=$user->displayUser();
                
                   <td class="text-center"><?php echo $duser->userId ?></td>
                   <td class="text-center"><?php echo $duser->username ?></td>
-                  <td class="text-center"><?php echo $duser->name ?></td>
+                  <td class="text-center"><?php echo $duser->roleName ?></td>
                   <td class="text-center"><?php echo $duser->email ?></td>
                   <td class="text-center">
                     <button
@@ -437,7 +437,7 @@ $data_users=$user->displayUser();
                     name="phone"
                     class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
                     placeholder="Enter Your Phone "
-                    value="<?= $user_edit[0]->tel;?>"
+                    value="<?= $user_edit[0]->phone;?>"
                   />
                 </div>
               </div>
@@ -449,7 +449,7 @@ $data_users=$user->displayUser();
                     name="password"
                     placeholder="Enter Password"
                     class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
-                    value="<?= $user_edit[0]->pw;?>"
+                  
                   />
                 </div>
                 <div class="w-[50%]">
@@ -459,7 +459,7 @@ $data_users=$user->displayUser();
                     name="newpassword"
                     placeholder="Confirm your Password"
                     class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
-                    value="<?= $user_edit[0]->pw;?>"
+                    
                   />
                 </div>
               </div>
