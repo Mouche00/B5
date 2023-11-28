@@ -187,7 +187,7 @@
                     <!-- ============ Form to Add Distributer ========= -->
                     <div>
                         <form
-                            action="./controllers/distributer/add.php"
+                            action="./app/controllers/distributer/controller.php"
                             method="post"
                             class="absolute top-[50%] left-[30%] translate-y-[-50%] bg-white p-5 w-[650px] rounded-md shadow-sm z-50 hidden"
                             id="Add"
@@ -211,7 +211,7 @@
                                 id=""
                                 class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
                             >
-                                <!-- <option value="Admin">Admin</option> -->
+                                <option value="cbm">cbm</option>
                             </select>
                         </div>
                             

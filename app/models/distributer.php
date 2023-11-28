@@ -16,6 +16,16 @@
             }
         }
 
+        public function display(){
+            try {
+                $sql = "SELECT * FROM atm";
+                $stmt = $this->connect()->prepare($sql);
+                $stmt->execute();
+            } catch (PDOException $e){
+                die("Error: " . $e->getMessage());
+            }
+        }
+
         public function update($id, $adress, $bankId){
             try {
                 $sql = "UPDATE atm SET adress = :adress, bankId = :bankId WHERE id = :id";
