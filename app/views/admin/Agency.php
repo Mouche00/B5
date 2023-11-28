@@ -1,5 +1,6 @@
 <?php
-require_once("app/models/agency.php");
+require_once("../../models/agency.php");
+
 
 $agence = new Agency();
 
@@ -40,9 +41,9 @@ $data_agence=$agence->displayAgency();
             crossorigin="anonymous"
         ></script>
         <!-- ================ Css Stylesheet ================ -->
-        <link rel="stylesheet" href="public/assets/css/client/admin.css" />
+        <link rel="stylesheet" href="../../../public/assets/css/client/admin.css" />
         <!-- ============ Declaration JS File ============-->
-        <script src="./public/assets/js/dashboard_Admin.js" defer></script>
+        <script src="../../../public/assets/js/dashboard_Admin.js" defer></script>
     </head>
     <body>
         <section class="flex items-center relative">
@@ -51,7 +52,7 @@ $data_agence=$agence->displayAgency();
                 <!-- ===== logo ===== -->
                 <div>
                     <img
-                        src="./public/assets/images/logo-white.png"
+                        src="../../../public/assets/images/logo-white.png"
                         alt="logo"
                         class="pt-10"
                     />
@@ -198,14 +199,14 @@ $data_agence=$agence->displayAgency();
                       class="bg-slate-900 text-white w-[35px] h-[35px] rounded-md"
                       
                     >
-                    <a href="app/views/agency/updateAgency.php?agence_id=<?= $dagence->agencyId;?>"> <i class="fa-solid fa-pen"></i></a>
+                    <a href="../../../app/views/agency/updateAgency.php?agence_id=<?= $dagence->agencyId;?>"> <i class="fa-solid fa-pen"></i></a>
                      
                     </button>
                                         <button
                                             class="bg-slate-900 text-white w-[35px] h-[35px] rounded-md"
                                             id="addBank"
                                         >
-                                        <a href="app/views/agency/deleteAgency.php?agency_id=<?= $dagence->agencyId;?>"><i class="fa-solid fa-trash"></i></a>
+                                        <a href="../../../app/views/agency/deleteAgency.php?agency_id=<?= $dagence->agencyId;?>"><i class="fa-solid fa-trash"></i></a>
                                         </button>
                                     </td>
                                 </tr>

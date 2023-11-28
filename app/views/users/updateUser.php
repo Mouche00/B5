@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $role=$_POST['role'];
   $postal=$_POST['postal'];
   
-  $userup->updateUser($user_id,$username,$password,$gendre,$role,$ville,$quartier,$rue,$postal,$email,$phone);
+  $userup->updateUser($user_id,$username,$password,$gendre,$agency,$role,$ville,$quartier,$rue,$postal,$email,$phone);
 header("Location: ../../views/admin/users.php");
 
 
@@ -33,6 +33,8 @@ header("Location: ../../views/admin/users.php");
 
 
 $data_users=$user->displayUser();  
+
+
 
 
 
@@ -504,8 +506,13 @@ $data_users=$user->displayUser();
                     id=""
                     class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
                   >
-                    <option value="">Select Agency :</option>
-                    <option value="Center Ville">Center Ville</option>
+                  <?php 
+                                            foreach($user_edit as $user) {
+                                                echo "
+                                                <option value='$user->agencyId'>$user->agencyId</option>
+                                                ";
+                                            }
+                                        ?>
                   </select>
                 </div>
                 <div class="w-[33%]">
