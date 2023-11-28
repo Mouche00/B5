@@ -2,6 +2,7 @@
 require_once("../../models/agency.php");
 
 
+
 $agence = new Agency();
 $agencyup= new Agency();
 
@@ -27,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     
   }
-  print_r($agence_edit);
+  // print_r($agence_edit);
 
  
 
@@ -72,7 +73,7 @@ $data_agence=$agence->displayAgency();
           <h2 class="text-2xl font-bold my-5 text-white">General</h2>
           <li class="my-2">
             <a
-              href="../../../bank.html"
+              href="../admin/bank.php"
               class="text-lg font-medium block w-[full] rounded-md h-[60px] flex items-center text-white p-5 group hover:text-red-500"
             >
               <i
@@ -83,7 +84,7 @@ $data_agence=$agence->displayAgency();
           </li>
           <li class="my-2">
             <a
-              href="../../../Users.php"
+              href="../admin/Users.php"
               class="active text-lg font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500 bg-gray-900 bg-opacity-20"
             >
               <i
@@ -94,7 +95,7 @@ $data_agence=$agence->displayAgency();
           </li>
           <li class="my-2">
             <a
-              href="../../../Accounts.html"
+              href="../admin/Accounts.php"
               class="text-lg font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500 bg-gray-900 bg-opacity-20"
             >
               <i
@@ -105,7 +106,7 @@ $data_agence=$agence->displayAgency();
           </li>
           <li class="my-2">
             <a
-              href="../../../Transactions.html"
+              href="../admin/Transactions.php"
               class="text-lg font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500 bg-gray-900 bg-opacity-20"
             >
               <i
@@ -116,7 +117,7 @@ $data_agence=$agence->displayAgency();
           </li>
           <li class="my-2">
             <a
-              href="#"
+              href="../admin/Agency.php"
               class="text-lg font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500 bg-gray-900 bg-opacity-20"
             >
               <i
@@ -127,7 +128,7 @@ $data_agence=$agence->displayAgency();
           </li>
           <li class="my-2">
             <a
-              href="../../../Distributer.html"
+              href="../admin/Distributer.php"
               class="text-lf font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500 bg-gray-900 bg-opacity-20"
             >
               <i
@@ -156,7 +157,7 @@ $data_agence=$agence->displayAgency();
                             >
                         </div>
                         <img
-                            src="./public/assets/images/admin.jpg"
+                            src="../../../public/assets/images/admin.jpg"
                             alt="profile"
                             class="w-[60px] h-[60px] rounded-full"
                         />
@@ -436,7 +437,7 @@ $data_agence=$agence->displayAgency();
               </div>
 
               <div class="flex gap-4">
-                <div class="w-[50%]">
+                <div class="hidden w-[50%]">
                   <label for="" class="text-xl">Bank</label>
                   <select
                     name="bank"
@@ -486,6 +487,6 @@ $data_agence=$agence->displayAgency();
                 onclick="updateForm()"
             ></div>
         </section>
-    <script src="./public/assets/js/mainUser.js"></script>
+    <script src="../../../public/assets/js/mainUser.js"></script>
     </body>
 </html>

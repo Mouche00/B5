@@ -94,7 +94,7 @@ $data_users=$user->displayUser();
           </li>
           <li class="my-2">
             <a
-              href="Accounts.html"
+              href="Accounts.php"
               class="text-lg font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500 bg-gray-900 bg-opacity-20"
             >
               <i
@@ -105,7 +105,7 @@ $data_users=$user->displayUser();
           </li>
           <li class="my-2">
             <a
-              href="Transactions.html"
+              href="Transactions.php"
               class="text-lg font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500 bg-gray-900 bg-opacity-20"
             >
               <i

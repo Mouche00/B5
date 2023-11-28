@@ -21,7 +21,7 @@
             crossorigin="anonymous"
         ></script>
         <!-- ================ Css Stylesheet ================ -->
-        <link rel="stylesheet" href="public/assets/css/client/admin.css" />
+        <link rel="stylesheet" href="../../../public/assets/css/client/admin.css" />
         <!-- ============ Declaration JS File ============-->
         <script src="../../../public/assets/js/dashboard_Admin.js" defer></script>
     </head>
@@ -41,7 +41,7 @@
                     <h2 class="text-2xl font-bold my-5 text-white">General</h2>
                     <li class="my-2">
                         <a
-                            href="bank.html"
+                            href="bank.php"
                             class="active text-lg font-medium block w-[full] rounded-md h-[60px] flex items-center bg-white p-5 group hover:text-red-500 bg-gray-900 bg-opacity-20"
                         >
                             <i
@@ -52,7 +52,7 @@
                     </li>
                     <li class="my-2">
                         <a
-                            href="Users.html"
+                            href="Users.php"
                             class="text-lg font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500 bg-gray-900 bg-opacity-20"
                         >
                             <i
@@ -63,7 +63,7 @@
                     </li>
                     <li class="my-2">
                         <a
-                            href="Accounts.html"
+                            href="Accounts.php"
                             class="text-lg font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500 bg-gray-900 bg-opacity-20"
                         >
                             <i
@@ -74,7 +74,7 @@
                     </li>
                     <li class="my-2">
                         <a
-                            href="Transactions.html"
+                            href="Transactions.php"
                             class="text-lg font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500 bg-gray-900 bg-opacity-20"
                         >
                         <i class="fa-solid "></i>
@@ -97,7 +97,7 @@
                     </li>
                     <li class="my-2">
                         <a
-                            href="Distributer.html"
+                            href="Distributer.php"
                             class="text-lf font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500 bg-gray-900 bg-opacity-20"
                         >
                             <i
@@ -127,7 +127,7 @@
                             >
                         </div>
                         <img
-                            src="./public/assets/images/admin.jpg"
+                            src="../../../public/assets/images/admin.jpg"
                             alt="profile"
                             class="w-[60px] h-[60px] rounded-full"
                         />
@@ -197,7 +197,7 @@
 
                     <!-- ============ Form to Edit Bank ========= -->
                     <div>
-                        <?php if($_GET['id']) { ?>
+                        <?php if(isset($_GET['id'])) { ?>
                             <form action="../../controllers/bank/controller.php" method="post" class="absolute top-[50%] left-[30%] translate-y-[-50%] bg-white p-5 w-[650px] rounded-md shadow-sm z-50" id="Edit">
                                 <div>
                                     <?php foreach($banks as $bank): ?>
@@ -223,7 +223,7 @@
             </main>
             <!-- ========== overlay ================= -->
             <div class="bg-black bg-opacity-60 w-full h-[100vh] absolute top-0 left-0 hidden" id="overlayAdd"></div>
-            <?php if($_GET['id']) { ?>
+            <?php if(isset($_GET['id'])) { ?>
                 <div class="bg-black bg-opacity-60 w-full h-[100vh] absolute top-0 left-0" id="overlayEdit" onclick="updateForm()"></div>
             <?php } ?>
         </section>

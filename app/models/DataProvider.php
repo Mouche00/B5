@@ -1,9 +1,9 @@
 <?php
 
 const CONFIG = [
-    'db'=>'mysql:host=localhost;dbname=db_bankmanagement',
+    'db'=>'mysql:host=localhost;dbname=baank',
     'db_user' => 'root',
-    'db_password' => 'root'
+    'db_password' => ''
 ];
 
 class DataProvider {
