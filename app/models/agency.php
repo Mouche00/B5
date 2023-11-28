@@ -4,21 +4,20 @@ require_once('DataProvider.php');
 
 
 class Agency extends DataProvider {
-   public function addAgence($longitude, $latitude,$bankId,$ville, $quartier,$rue,$codePostal,$email,$tel){
+   public function addAgence($longitude, $latitude,$bankId,$ville, $quartier,$rue,$codePostal,$email,$phone){
     $db=$this->connect();
     if($db==null){
         return null;
    }
    $sql= 'START TRANSACTION;
 
-   INSERT INTO agency (longitude, latitude, bankId)
-   VALUES (:longitude,:latitude,:bankId);
+   INSERT INTO adress (ville, quartier,rue,codePostal,email,phone)
+   VALUES (:ville, :quartier,:rue,:codePostal,:email,:phone);
 
+   SET @adressId = LAST_INSERT_ID();
 
-   SET @agencyId = LAST_INSERT_ID();
-
-  INSERT INTO adress (ville, quartier,rue,codePostal,email,tel,agencyId)
-  VALUES (:ville, :quartier,:rue,:codePostal,:email,:tel,@agencyId);
+   INSERT INTO agency (longitude, latitude, bankId,adrId)
+   VALUES (:longitude,:latitude,:bankId,@adressId);
 
   COMMIT;';
    $stmt = $db->prepare($sql);
@@ -30,7 +29,7 @@ class Agency extends DataProvider {
     ":rue"=> $rue,
     ":codePostal"=> $codePostal,
     ":email"=> $email,
-    ":tel"=> $tel,
+    ":phone"=> $phone,
     ":bankId"=>$bankId
    ]);
    $db=null;
@@ -63,7 +62,7 @@ JOIN bank ON agency.bankId = bank.bankId;');
 
 
 
-public function updateAgence($id,$longitude, $latitude,$bankId,$ville, $quartier,$rue,$codePostal,$email,$tel) {
+public function updateAgence($id,$longitude, $latitude,$bankId,$ville, $quartier,$rue,$codePostal,$email,$phone) {
       
     $db = $this->connect();
 
@@ -72,7 +71,7 @@ public function updateAgence($id,$longitude, $latitude,$bankId,$ville, $quartier
     }
 
     $sql = "UPDATE agency SET longitude = :longitude, latitude = :latitude, bankId = :bankId  WHERE agencyId = :id;
-    UPDATE adress SET ville = :ville, quartier = :quartier, rue = :rue, codePostal= :codePostal , email=:email , tel= :tel WHERE agencyId = :id ;";
+    UPDATE adress SET ville = :ville, quartier = :quartier, rue = :rue, codePostal= :codePostal , email=:email , phone= :phone WHERE adrId IN (SELECT adrId FROM agency WHERE agencyId = :id) ;";
 
     $stmt = $db->prepare($sql);
 
@@ -84,7 +83,7 @@ public function updateAgence($id,$longitude, $latitude,$bankId,$ville, $quartier
         ":rue"=> $rue,
         ":codePostal"=> $codePostal,
         ":email"=> $email,
-        ":tel"=> $tel,
+        ":phone"=> $phone,
         ":bankId"=>$bankId,
         ":id"=> $id
        ]);
@@ -126,7 +125,7 @@ public function displayAgencyOne($id){
    bank.*
 FROM agency
 JOIN bank ON agency.bankId = bank.bankId
-JOIN adress ON agency.agencyId = adress.agencyId
+JOIN adress ON agency.adrid = adress.adrid
 WHERE agency.agencyId = :id;';
 
 $stmt = $db->prepare($query);

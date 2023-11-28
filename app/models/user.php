@@ -3,7 +3,7 @@
 require_once('DataProvider.php');
 
 class Users extends DataProvider {
-   public function addUser($username,$pw,$gendre,$roleName,$ville, $quartier,$rue,$codePostal,$email,$phone) {
+   public function addUser($username,$pw,$gendre,$roleName,$ville, $quartier,$rue,$codePostal,$email,$phone,$agencyId) {
     $db=$this->connect();
     if($db==null){
         return null;
@@ -16,8 +16,8 @@ class Users extends DataProvider {
 
    SET @adressId = LAST_INSERT_ID();
 
-        INSERT INTO users (username, pw, gendre,adrId)
-         VALUES (:username,:pw,:gendre,@adressId);
+        INSERT INTO users (username, pw, gendre,agencyId,adrId)
+         VALUES (:username,:pw,:gendre,:agencyId,@adressId);
 
    
          SET @userId = LAST_INSERT_ID();
@@ -33,6 +33,7 @@ class Users extends DataProvider {
     ':username'=> $username,
     ":pw" => $pw,
     ":gendre" => $gendre,
+    ":agencyId" => $agencyId,
     ":roleName" => $roleName,
     ":ville"=> $ville,
     ":quartier"=> $quartier,
@@ -56,10 +57,12 @@ public function displayUser(){
    $query = $db->query('SELECT 
    users.userId,
    users.username,
+   users.agencyId,
    adress.email,
    roleofuser.roleName
 FROM users
 JOIN roleofuser ON users.userId = roleofuser.userId
+JOIN agency ON users.agencyId = agency.agencyId
 JOIN adress
 WHERE users.adrId = adress.adrId
 ;');
@@ -74,7 +77,7 @@ WHERE users.adrId = adress.adrId
 
 
 
-public function updateUser($id,$username,$pw,$gendre,$roleName,$ville, $quartier,$rue,$codePostal,$email,$phone) {
+public function updateUser($id,$username,$pw,$gendre,$agencyId,$roleName,$ville, $quartier,$rue,$codePostal,$email,$phone) {
       
     $db = $this->connect();
 
@@ -82,7 +85,7 @@ public function updateUser($id,$username,$pw,$gendre,$roleName,$ville, $quartier
         return;
     }
 
-    $sql = "UPDATE users SET username = :username, pw = :pw, gendre = :gendre  WHERE userId = :id;
+    $sql = "UPDATE users SET username = :username, pw = :pw, gendre = :gendre , agencyId = :agencyId  WHERE userId = :id;
     UPDATE adress SET ville = :ville, quartier = :quartier, rue = :rue, codePostal= :codePostal , email=:email , phone= :phone WHERE adrId IN (SELECT adrId FROM users WHERE userId = :id); ;
     UPDATE roleofuser SET roleName = :roleName WHERE userId = :id ;";
 
@@ -93,6 +96,7 @@ public function updateUser($id,$username,$pw,$gendre,$roleName,$ville, $quartier
     ':username'=> $username,
     ":pw" => $pw,
     ":gendre" => $gendre,
+    ":agencyId" => $agencyId,
     ":roleName" => $roleName,
     ":ville"=> $ville,
     ":quartier"=> $quartier,
@@ -120,6 +124,7 @@ public function displayUserOne($id){
    users.*,
    adress.*,
    roleofuser.*
+   
 FROM users
 JOIN roleofuser ON users.userId = roleofuser.userId
 JOIN adress ON users.adrid = adress.adrid

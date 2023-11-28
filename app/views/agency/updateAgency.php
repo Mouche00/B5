@@ -23,7 +23,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   
 
   $agence->updateAgence($agence_id,$longitude,$latitude,$bank,$ville,$quartier,$rue,$postal,$email,$phone);
-header("Location: ../../../../BankFed/Agency.php");
+  header("Location: ../../views/admin/agency.php");
+
     
   }
   print_r($agence_edit);
@@ -315,9 +316,7 @@ $data_agence=$agence->displayAgency();
                     id=""
                     class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
                   >
-                    <option value="">Select Bank :</option>
                     <option value="1">Cih</option>
-                    <option value="2">Bank Populaire</option>
                   </select>
                 </div>
                 <div class="w-[50%]">
@@ -360,7 +359,7 @@ $data_agence=$agence->displayAgency();
                     name="phone"
                     class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
                     placeholder="Enter Your Phone "
-                    value="<?= $agence_edit[0]->tel;?>"
+                    value="<?= $agence_edit[0]->phone;?>"
                   />
                 </div>
                 <div class="w-[50%]">
@@ -446,9 +445,8 @@ $data_agence=$agence->displayAgency();
                     value="<?= $agence_edit[0]->bankId;?>"
 
                   >
-                    <option value="">Select Bank :</option>
                     <option value="1">Cih</option>
-                    <option value="2">Bank Populaire</option>
+                    
                   </select>
                 </div>
                 <div class="w-[50%]">

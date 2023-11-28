@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $role=$_POST['role'];
   $postal=$_POST['postal'];
   
-  $user->addUser($username,$password,$gendre,$role,$ville,$quartier,$rue,$postal,$email,$phone);
+  $user->addUser($username,$password,$gendre,$role,$ville,$quartier,$rue,$postal,$email,$phone,$agency);
     
   }
 
@@ -352,8 +352,14 @@ $data_users=$user->displayUser();
                     id=""
                     class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
                   >
-                    <option value="">Select Agency :</option>
-                    <option value="Center Ville">Center Ville</option>
+                   
+                  <?php 
+                                            foreach($data_users as $user) {
+                                                echo "
+                                                <option value='$user->agencyId'>$user->agencyId</option>
+                                                ";
+                                            }
+                                        ?>
                   </select>
                 </div>
                 <div class="w-[33%]">
@@ -364,8 +370,8 @@ $data_users=$user->displayUser();
                     class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
                   >
                     <option value="">Select Role :</option>
-                    <option value="Admin">Admin</option>
-                    <option value="Client">Client</option>
+                    <option value="admin">Admin</option>
+                    <option value="client">Client</option>
 
                   </select>
                 </div>
