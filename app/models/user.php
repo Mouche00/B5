@@ -102,7 +102,7 @@ public function updateUser($id,$username,$pw,$gendre,$role,$ville, $quartier,$ru
     ":tel"=> $tel
        ]);
 
-    $smt = null;
+    $stmt = null;
     $db = null;
 }
 
@@ -122,7 +122,7 @@ public function displayUserOne($id){
    roleofuser.*
 FROM users
 JOIN roleofuser ON users.userId = roleofuser.userId
-JOIN adress ON users.userId = adress.userId
+JOIN adress ON users.adrId = adress.adrId
 WHERE users.userId = :id;';
 
 $stmt = $db->prepare($query);
@@ -153,7 +153,7 @@ public function deleteUser($id) {
     $db = $this->connect();
 
     if($db == null) {
-        return;
+        return null;
     }
 
     $sql = "DELETE FROM users WHERE userId = :id";
