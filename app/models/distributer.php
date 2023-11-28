@@ -4,11 +4,13 @@
 
     class Distributer extends DataProvider {
         
-        public function insert($adress, $bankId){
+        public function insert($adress, $longitude, $latitude, $bankId){
             try {
-                $sql = "INSERT INTO atm (adress, bankId) VALUES (:adress, :bankId)";
+                $sql = "INSERT INTO atm (adress, longitude, latitude, bankId) VALUES (:adress, :longitude, :latitude, :bankId)";
                 $stmt = $this->connect()->prepare($sql); 
                 $stmt->bindParam(":adress", $adress);
+                $stmt->bindParam(":longitude", $longitude);
+                $stmt->bindParam(":latitude", $latitude);
                 $stmt->bindParam(":bankId", $bankId);
                 $stmt->execute();
             } catch (PDOException $e){
@@ -19,19 +21,34 @@
         public function display(){
             try {
                 $sql = "SELECT * FROM atm";
-                $stmt = $this->connect()->prepare($sql);
-                $stmt->execute();
+                $query = $this->connect()->query($sql);
+                $data = $query->fetchAll(PDO::FETCH_ASSOC);
+                return $data;
             } catch (PDOException $e){
                 die("Error: " . $e->getMessage());
             }
         }
 
-        public function update($id, $adress, $bankId){
+        public function displayOne($id){
             try {
-                $sql = "UPDATE atm SET adress = :adress, bankId = :bankId WHERE id = :id";
+                $sql = "SELECT * FROM atm WHERE atmId = :id";
+                $stmt = $this->connect()->prepare($sql);
+                $stmt->bindParam(":id", $id);
+                $stmt->execute();
+                $data = $query->fetchAll(PDO::FETCH_ASSOC);
+                return $data;
+            } catch (PDOException $e){
+                die("Error: " . $e->getMessage());
+            }
+        }
+
+        public function update($id, $adress, $longitude, $latitude){
+            try {
+                $sql = "UPDATE atm SET adress = :adress, longitude = :longitude, latitude = :latitude WHERE atmId = :id";
                 $stmt = $this->connect()->prepare($sql);
                 $stmt->bindParam(":adress", $adress);
-                $stmt->bindParam(":bankId", $bankId);
+                $stmt->bindParam(":longitude", $longitude);
+                $stmt->bindParam(":latitude", $latitude);
                 $stmt->bindParam(":id", $id);
                 $stmt->execute();
             } catch (PDOException $e){
@@ -42,7 +59,7 @@
 
         public function delete($id){
             try {
-                $sql = "DELETE FROM atm WHERE id = :id";
+                $sql = "DELETE FROM atm WHERE atmId = :id";
                 $stmt = $this->connect()->prepare($sql);
                 $stmt->bindParam(":id", $id);
                 $stmt->execute();

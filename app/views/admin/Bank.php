@@ -197,7 +197,7 @@
 
                     <!-- ============ Form to Edit Bank ========= -->
                     <div>
-                        <?php if($_GET['id']) { ?>
+                        <?php if(isset($_GET['id'])) { ?>
                             <form action="../../controllers/bank/controller.php" method="post" class="absolute top-[50%] left-[30%] translate-y-[-50%] bg-white p-5 w-[650px] rounded-md shadow-sm z-50" id="Edit">
                                 <div>
                                     <?php foreach($banks as $bank): ?>
