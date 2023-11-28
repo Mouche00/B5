@@ -7,7 +7,7 @@ const CONFIG = [
 ];
 
 class DataProvider {
-    protected function connect() {
+    public function connect() {
         try {
             $dsn = CONFIG['db'];
             $username = CONFIG['db_user'];
