@@ -3,24 +3,28 @@
 require_once('DataProvider.php');
 
 class Users extends DataProvider {
-   public function addUser($username,$pw,$gendre,$role,$ville, $quartier,$rue,$codePostal,$email,$tel) {
+   public function addUser($username,$pw,$gendre,$roleName,$ville, $quartier,$rue,$codePostal,$email,$phone) {
     $db=$this->connect();
     if($db==null){
         return null;
    }
    $sql= 'START TRANSACTION;
 
-         INSERT INTO users (username, pw, gendre)
-         VALUES (:username,:pw,:gendre);
-   
+
+   INSERT INTO adress (ville, quartier,rue,codePostal,email,phone)
+   VALUES (:ville, :quartier,:rue,:codePostal,:email,:phone);
+
+   SET @adressId = LAST_INSERT_ID();
+
+        INSERT INTO users (username, pw, gendre,adrId)
+         VALUES (:username,:pw,:gendre,@adressId);
+
    
          SET @userId = LAST_INSERT_ID();
    
-        INSERT INTO roleofuser (userId, name)
-        VALUES (@userId, :role);
+        INSERT INTO roleofuser (userId, roleName)
+        VALUES (@userId, :roleName);
    
-        INSERT INTO adress (ville, quartier,rue,codePostal,email,tel,userId)
-        VALUES (:ville, :quartier,:rue,:codePostal,:email,:tel,@userId);
 
    
         COMMIT;';
@@ -29,13 +33,13 @@ class Users extends DataProvider {
     ':username'=> $username,
     ":pw" => $pw,
     ":gendre" => $gendre,
-    ":role" => $role,
+    ":roleName" => $roleName,
     ":ville"=> $ville,
     ":quartier"=> $quartier,
     ":rue"=> $rue,
     ":codePostal"=> $codePostal,
     ":email"=> $email,
-    ":tel"=> $tel
+    ":phone"=> $phone
    ]);
    $db=null;
    $stmt=null;
@@ -53,10 +57,12 @@ public function displayUser(){
    users.userId,
    users.username,
    adress.email,
-   roleofuser.name
+   roleofuser.roleName
 FROM users
 JOIN roleofuser ON users.userId = roleofuser.userId
-JOIN adress ON users.userId = adress.userId;');
+JOIN adress
+WHERE users.adrId = adress.adrId
+;');
 
    $data_users=$query->fetchAll(PDO::FETCH_OBJ);
 

@@ -1,5 +1,5 @@
 <?php
-require_once("app/models/user.php");
+require_once("../../models/user.php");
 
 $user = new Users();
 
@@ -52,9 +52,9 @@ $data_users=$user->displayUser();
       crossorigin="anonymous"
     ></script>
     <!-- ================ Css Stylesheet ================ -->
-    <link rel="stylesheet" href="public/assets/css/client/admin.css" />
+    <link rel="stylesheet" href="../../../public/assets/css/client/admin.css" />
     <!-- ============ Declaration JS File ============-->
-    <script src="./public/assets/js/dashboard_Admin.js" defer></script>
+    <script src="../../../public/assets/js/dashboard_Admin.js" defer></script>
   </head>
   <body>
     <section class="flex items-center relative">
@@ -63,7 +63,7 @@ $data_users=$user->displayUser();
         <!-- ===== logo ===== -->
         <div>
           <img
-            src="./public/assets/images/logo-white.png"
+            src="../../../public/assets/images/logo-white.png"
             alt="logo"
             class="pt-10"
           />
@@ -150,7 +150,7 @@ $data_users=$user->displayUser();
               <span class="text-gray-500 text-md block text-right">Admin</span>
             </div>
             <img
-              src="./public/assets/images/admin.jpg"
+              src="../../../public/assets/images/admin.jpg"
               alt="profile"
               class="w-[60px] h-[60px] rounded-full"
             />
@@ -208,21 +208,21 @@ $data_users=$user->displayUser();
                       class="bg-slate-900 text-white w-[35px] h-[35px] rounded-md"
                       
                     >
-                    <a href="app/views/users/updateUser.php?user_id=<?= $duser->userId;?>"> <i class="fa-solid fa-pen"></i></a>
+                    <a href="../../../app/views/users/updateUser.php?user_id=<?= $duser->userId;?>"> <i class="fa-solid fa-pen"></i></a>
                      
 
                     </button>
                     <button
                       class="bg-slate-900 text-white w-[35px] h-[35px] rounded-md"
                     >
-                    <a href="app/views/users/deleteUser.php?user_id=<?= $duser->userId;?>"><i class="fa-solid fa-trash"></i></a>
+                    <a href="../../../app/views/users/deleteUser.php?user_id=<?= $duser->userId;?>"><i class="fa-solid fa-trash"></i></a>
                       
                     </button>
 
                     <button
                       class="bg-slate-900 text-white w-[35px] h-[35px] rounded-md"
                     >
-                    <a href="app/views/users/UserAcc.php?user_id=<?= $duser->userId;?>"><i class="fa-solid fa-file"></i></a>
+                    <a href="../../../app/views/users/UserAcc.php?user_id=<?= $duser->userId;?>"><i class="fa-solid fa-file"></i></a>
                       
                     </button>
                   </td>
@@ -554,7 +554,7 @@ $data_users=$user->displayUser();
         onclick="updateForm()"
       ></div>
     </section>
-    <script src="./public/assets/js/mainUser.js"></script>
+    <script src="../../../public/assets/js/mainUser.js"></script>
 
   </body>
 </html>
