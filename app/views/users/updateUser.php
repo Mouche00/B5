@@ -80,7 +80,7 @@ $data_users=$user->displayUser();
           <h2 class="text-2xl font-bold my-5 text-white">General</h2>
           <li class="my-2">
             <a
-              href="../../../bank.html"
+              href="../admin/bank.php"
               class="text-lg font-medium block w-[full] rounded-md h-[60px] flex items-center text-white p-5 group hover:text-red-500"
             >
               <i
@@ -91,7 +91,7 @@ $data_users=$user->displayUser();
           </li>
           <li class="my-2">
             <a
-              href="../../../Users.php"
+              href="../admin/Users.php"
               class="active text-lg font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500 bg-gray-900 bg-opacity-20"
             >
               <i
@@ -102,7 +102,7 @@ $data_users=$user->displayUser();
           </li>
           <li class="my-2">
             <a
-              href="../../../Accounts.html"
+              href="../admin/Accounts.php"
               class="text-lg font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500 bg-gray-900 bg-opacity-20"
             >
               <i
@@ -113,7 +113,7 @@ $data_users=$user->displayUser();
           </li>
           <li class="my-2">
             <a
-              href="../../../Transactions.html"
+              href="../admin/Transactions.php"
               class="text-lg font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500 bg-gray-900 bg-opacity-20"
             >
               <i
@@ -124,7 +124,7 @@ $data_users=$user->displayUser();
           </li>
           <li class="my-2">
             <a
-              href="#"
+              href="../admin/Agency.php"
               class="text-lg font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500 bg-gray-900 bg-opacity-20"
             >
               <i
