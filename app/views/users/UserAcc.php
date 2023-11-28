@@ -1,3 +1,30 @@
+<?php
+require_once("../../models/user.php");
+
+
+$user = new Users();
+
+$user_id= $_GET['user_id'];
+
+$data_acc=$user->displayUserAcc($user_id);
+
+
+
+// ($username,$pw,$gendre,$role,$ville, $quartier,$rue,$codePostal,$email,$tel)
+
+
+
+print_r($data_acc);
+
+?>
+
+
+
+
+
+
+
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -11,9 +38,9 @@
       crossorigin="anonymous"
     ></script>
     <!-- ================ Css Stylesheet ================ -->
-    <link rel="stylesheet" href="public/assets/css/client/admin.css" />
+    <link rel="stylesheet" href="../../../public/assets/css/client/admin.css" />
     <!-- ============ Declaration JS File ============-->
-    <script src="./public/assets/js/dashboard_Admin.js" defer></script>
+    <script src="../../../public/assets/js/dashboard_Admin.js" defer></script>
   </head>
   <body>
     <section class="flex items-center relative">
@@ -22,7 +49,7 @@
         <!-- ===== logo ===== -->
         <div>
           <img
-            src="./public/assets/images/logo-white.png"
+            src="../../../public/assets/images/logo-white.png"
             alt="logo"
             class="pt-10"
           />
@@ -31,7 +58,7 @@
           <h2 class="text-2xl font-bold my-5 text-white">General</h2>
           <li class="my-2">
             <a
-              href="bank.html"
+              href="../../../bank.html"
               class="text-lg font-medium block w-[full] rounded-md h-[60px] flex items-center text-white p-5 group hover:text-red-500"
             >
               <i
@@ -42,7 +69,7 @@
           </li>
           <li class="my-2">
             <a
-              href="Users.html"
+              href="../../../Users.php"
               class="active text-lg font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500 bg-gray-900 bg-opacity-20"
             >
               <i
@@ -53,7 +80,7 @@
           </li>
           <li class="my-2">
             <a
-              href="Accounts.html"
+              href="../../../Accounts.html"
               class="text-lg font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500 bg-gray-900 bg-opacity-20"
             >
               <i
@@ -64,7 +91,7 @@
           </li>
           <li class="my-2">
             <a
-              href="Transactions.html"
+              href="../../../Transactions.html"
               class="text-lg font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500 bg-gray-900 bg-opacity-20"
             >
               <i
@@ -86,7 +113,7 @@
           </li>
           <li class="my-2">
             <a
-              href="#"
+              href="../../../Distributer.html"
               class="text-lf font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500 bg-gray-900 bg-opacity-20"
             >
               <i
@@ -109,7 +136,7 @@
               <span class="text-gray-500 text-md block text-right">Admin</span>
             </div>
             <img
-              src="./public/assets/images/admin.jpg"
+              src="../../../public/assets/images/admin.jpg"
               alt="profile"
               class="w-[60px] h-[60px] rounded-full"
             />
@@ -123,7 +150,7 @@
               <h3
                 class="text-orange-600 text-3xl font-bold tracking-widest mb-2"
               >
-                Users
+              <?php echo $data_acc[0]->username?> Accounts
               </h3>
               <p class="text-xl">Our Users around The world</p>
             </div>
@@ -142,30 +169,54 @@
               <thead class="">
                 <tr class="bg-slate-900 text-white h-[60px]">
                   <th class="">ID</th>
-                  <th class="">Username</th>
-                  <th class="">Password</th>
+                  <th class="">Balance</th>
+                  <th class="">RIB</th>
+                  <th class="">User_Id</th>
                   <th class="">Actions</th>
                 </tr>
               </thead>
               <tbody>
+
+              
+
+              <?php 
+              foreach($data_acc as $duser) {
+              ?>
                 <tr class="h-[50px]">
-                  <td class="text-center">1</td>
-                  <td class="text-center">Mohammed JAOUL</td>
-                  <td class="text-center">123456748</td>
+               
+                  <td class="text-center"><?php echo $duser->accountId ?></td>
+                  <td class="text-center"><?php echo $duser->balance ?></td>
+                  <td class="text-center"><?php echo $duser->RIB ?></td>
+                  <td class="text-center"><?php echo $duser->username?></td>
                   <td class="text-center">
                     <button
                       class="bg-slate-900 text-white w-[35px] h-[35px] rounded-md"
-                      onclick="updateForm()"
+                      
                     >
-                      <i class="fa-solid fa-pen"></i>
+                    <a href="app/views/users/updateUser.php?user_id=<?= $duser->userId;?>"> <i class="fa-solid fa-pen"></i></a>
+                     
                     </button>
                     <button
                       class="bg-slate-900 text-white w-[35px] h-[35px] rounded-md"
                     >
-                      <i class="fa-solid fa-trash"></i>
+                    <a href="app/views/users/deleteUser.php?user_id=<?= $duser->userId;?>"><i class="fa-solid fa-trash"></i></a>
+                      
+                    </button>
+
+                    <button
+                      class="bg-slate-900 text-white w-[35px] h-[35px] rounded-md"
+                    >
+                    <a href="app/views/users/UserAcc.php?user_id=<?= $duser->userId;?>">
+                    <i class="fa-solid fa-right-left"></i>
+                </a>
+                      
                     </button>
                   </td>
+                 
                 </tr>
+                <?php 
+              }
+              ?>
               </tbody>
             </table>
           </div>
@@ -173,7 +224,7 @@
           <div>
             <form
               action=""
-              method="get"
+              method="post"
               class="absolute top-[50%] left-[20%] translate-y-[-50%] bg-white p-5 w-[1000px] rounded-md shadow-sm z-50 hidden"
               id="Add"
             >
@@ -210,8 +261,8 @@
                     id="gendre"
                     class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
                   >
-                    <option value="male">Male</option>
-                    <option value="male">Female</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
                   </select>
                 </div>
                 <div class="w-[50%]">
@@ -297,6 +348,7 @@
                   >
                     <option value="">Select Role :</option>
                     <option value="Admin">Admin</option>
+                    <option value="Client">Client</option>
                   </select>
                 </div>
                 <div class="w-[33%]">
@@ -321,7 +373,7 @@
           </div>
           <!-- ============ Form to add New Users ========= -->
 
-          <!-- ============ Form to add New Users ========= -->
+          <!-- ============ Form to Update Users ========= -->
           <div>
             <form
               action=""
@@ -330,7 +382,7 @@
               id="Edit"
             >
               <h1 class="text-center font-semibold text-3xl my-5">
-                Add new User
+                Update User
               </h1>
               <div class="flex gap-5">
                 <div class="w-[50%]">
@@ -352,7 +404,28 @@
                   />
                 </div>
               </div>
-
+              <div class="flex gap-5">
+                <div class="w-[50%]">
+                  <label for="" class="text-xl">Gendre</label>
+                  <select
+                    name="gendre"
+                    id="gendre"
+                    class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
+                  >
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                  </select>
+                </div>
+                <div class="w-[50%]">
+                  <label for="" class="text-xl">Phone</label>
+                  <input
+                    type="tel"
+                    name="phone"
+                    class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
+                    placeholder="Enter Your Phone "
+                  />
+                </div>
+              </div>
               <div class="flex gap-5">
                 <div class="w-[50%]">
                   <label for="" class="text-xl">Password</label>
@@ -438,16 +511,13 @@
               </div>
 
               <div>
-                <input
-                  type="submit"
-                  name="edit"
-                  value="Edit"
-                  class="block w-full py-3 text-white text-xl px-1 cursor-pointer mt-5 outline-none border-none bg-slate-900"
-                />
+               
+                   <button type="submit" name="edit" value="Edit" class="block w-full py-3 text-white text-xl px-1 cursor-pointer mt-5 outline-none border-none bg-slate-900"><a href="app/views/users/updateUser.php?user_id=">Edit</a></button>
+    
               </div>
             </form>
           </div>
-          <!-- ============ Form to add New Users ========= -->
+          <!-- ============ Form to Update Users ========= -->
         </div>
         <!-- ============ Content ============= -->
       </main>
@@ -462,5 +532,6 @@
         onclick="updateForm()"
       ></div>
     </section>
+    <script src="./public/assets/js/mainUser.js"></script>
   </body>
 </html>

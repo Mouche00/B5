@@ -1,3 +1,45 @@
+
+<?php 
+
+    require_once '../../models/accounts.php';
+    require_once '../../models/user.php';
+
+    // if (isset($_POST['submit'])) {
+    //     $balance = $_POST['Balance'];
+    //     $rib = $_POST['rib'];
+    //     $userID = $_POST['accountOwner'];
+    
+    //     }
+        
+    $user = new Users();
+    $users = $user->displayUser();
+    print_r($users);
+
+
+    
+
+
+
+
+
+
+?>
+
+
+<?php
+
+
+
+
+?>
+
+
+
+
+
+
+
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -13,7 +55,7 @@
         <!-- ================ Css Stylesheet ================ -->
         <link rel="stylesheet" href="public/assets/css/client/admin.css" />
         <!-- ============ Declaration JS File ============-->
-        <script src="./public/assets/js/dashboard_Admin.js" defer></script>
+        <script src="../../../public/assets/js/dashboard_Admin.js" defer></script>
     </head>
     <body>
         <section class="flex items-center relative">
@@ -32,7 +74,7 @@
                     <li class="my-2">
                         <a
                             href="bank.html"
-                            class="text-lg font-medium block w-[full] rounded-md h-[60px] flex text-white items-center p-5 group hover:text-red-500"
+                            class="text-lg font-medium block w-[full] rounded-md h-[60px] flex items-center text-white p-5 group hover:text-red-500"
                         >
                             <i
                                 class="fa-solid fa-building-columns mr-5 text-lg group-hover:text-red-500"
@@ -43,7 +85,7 @@
                     <li class="my-2">
                         <a
                             href="Users.html"
-                            class="text-lg font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500"
+                            class="text-lg font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500 bg-gray-900 bg-opacity-20"
                         >
                             <i
                                 class="fa-solid fa-user mr-5 text-lg group-hover:text-red-500"
@@ -54,7 +96,7 @@
                     <li class="my-2">
                         <a
                             href="Accounts.html"
-                            class="text-lg font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500"
+                            class="active text-lg font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500"
                         >
                             <i
                                 class="fa-solid fa-file mr-5 text-lg group-hover:text-red-500"
@@ -65,9 +107,8 @@
                     <li class="my-2">
                         <a
                             href="Transactions.html"
-                            class=" font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500"
+                            class="text-lg font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500 bg-gray-900 bg-opacity-20"
                         >
-                            <i class="fa-solid"></i>
                             <i
                                 class="fa-solid fa-right-left mr-5 text-lg group-hover:text-red-500"
                             ></i
@@ -77,21 +118,21 @@
                     <li class="my-2">
                         <a
                             href="Agency.html"
-                            class="  text-lg font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500 "
+                            class="text-lg font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500 bg-gray-900 bg-opacity-20"
                         >
                             <i
-                                class="fa-solid fa-building mr-5 text-lg group-hover:text-red-500"
+                                class="fa-solid fa-building text-white mr-5 text-lg group-hover:text-red-500"
                             ></i>
-                            Agency</a
+                            Agnecy</a
                         >
                     </li>
                     <li class="my-2">
                         <a
                             href="Distributer.html"
-                            class="active text-lf font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500 bg-gray-900 bg-opacity-20"
+                            class="text-lf font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500 bg-gray-900 bg-opacity-20"
                         >
                             <i
-                                class="fa-solid fa-credit-card  mr-5 text-lg group-hover:text-red-500"
+                                class="fa-solid fa-credit-card text-white mr-5 text-lg group-hover:text-red-500"
                             ></i>
                             Distributer</a
                         >
@@ -130,16 +171,16 @@
                             <h3
                                 class="text-orange-600 text-3xl font-bold tracking-widest mb-2"
                             >
-                                Transaction
+                                Accounts
                             </h3>
-                            <p class="text-xl">Our Banks around The world</p>
+                            <p class="text-xl">Accounts Lists</p>
                         </div>
                         <div>
                             <button
                                 class="bg-slate-900 text-white w-[160px] h-[50px] rounded-md"
                                 id="addBank"
                             >
-                                Add Transaction
+                                Add Account
                             </button>
                         </div>
                     </div>
@@ -148,19 +189,19 @@
                         <table class="w-full table-auto">
                             <thead class="">
                                 <tr class="bg-slate-900 text-white h-[60px]">
-                                    <th class="">TransactionID</th>
-                                    <th class="">Type</th>
-                                    <th class="">Amount</th>
                                     <th class="">AccountID</th>
+                                    <th class="">Balance</th>
+                                    <th class="">R.I.B</th>
+                                    <th class="">Account owner</th>
                                     <th class="">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr class="h-[50px]">
                                     <td class="text-center">1</td>
-                                    <td class="text-center">Dèbit</td>
-                                    <td class="text-center">1961</td>
-                                    <td class="text-center">6</td>
+                                    <td class="text-center">xxxxx</td>
+                                    <td class="text-center">123456748</td>
+                                    <td class="text-center">Mohammed</td>
                                     <td class="text-center">
                                         <button
                                             class="bg-slate-900 text-white w-[35px] h-[35px] rounded-md"
@@ -170,54 +211,74 @@
                                         </button>
                                         <button
                                             class="bg-slate-900 text-white w-[35px] h-[35px] rounded-md"
-                                            id="addBank"
                                         >
                                             <i class="fa-solid fa-trash"></i>
+                                        </button>
+                                        <button
+                                            class="bg-slate-900 text-white w-[35px] h-[35px] rounded-md"
+                                        >
+                                            <i class="fa-solid fa-right-left"></i>
                                         </button>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-                    <!-- ============ Form to Add Transaction ========= -->
+                    <!-- ============ Form to add Accounts ========= -->
                     <div>
                         <form
                             action=""
-                            method="get"
-                            class="absolute top-[50%] left-[30%] translate-y-[-50%] bg-white p-5 w-[650px] rounded-md shadow-sm z-50 hidden"
+                            method="post"
+                            class="absolute top-[50%] left-[35%] translate-y-[-50%] bg-white p-5 w-[500px] rounded-md shadow-sm z-50 hidden"
                             id="Add"
                         >
-                            
+                            <h1 class="text-center font-semibold text-3xl my-5">
+                                Add Account
+                            </h1>
+
+                                <div class="">
+                                    <label for="" class="text-xl"
+                                        >Balance</label
+                                    >
+                                    <input
+                                        type="text"
+                                        name="Balance"
+                                        class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
+                                        placeholder="Enter Balance "
+                                    />
+                                </div>
+                                <div class="">
+                                    <label for="" class="text-xl">R.I.B</label>
+                                    <input
+                                        type="text"
+                                        name="rib"
+                                        class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
+                                        placeholder="Enter R.I.B"
+                                    />
+                                </div>
+                                <!-- ========= fetch users ======= -->
+                                
+
+
+                                <div >
+                                    <label for="" class="text-xl">Account owner</label>
+                                    <select name="accountOwner" id="" class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"> 
+                                        <option value="">Select Account owner :</option>
+                                        <option value=""></option>
+                                    </select>
+                                </div>
+
                             <div>
                                 <input
                                     type="submit"
                                     name="submit"
-                                    class="block w-full py-3 text-white mt-5 text-xl px-1 cursor-pointer my-2 outline-none border-none bg-slate-900"
+                                    class="block w-full py-3 text-white text-xl px-1 cursor-pointer mt-5 outline-none border-none bg-slate-900"
                                 />
                             </div>
                         </form>
                     </div>
-                    <!-- ============ Form to add Transaction ========= -->
-                    <!-- ============ Form to Edit Distributeur ========= -->
-                    <div>
-                        <form
-                            action=""
-                            method="get"
-                            class="absolute top-[50%] left-[30%] translate-y-[-50%] bg-white p-5 w-[650px] rounded-md shadow-sm z-50 hidden"
-                            id="Edit"
-                        >
- 
-                            <div>
-                                <input
-                                    type="submit"
-                                    name="submit"
-                                    value="Edit"
-                                    class="block w-full py-3 text-white mt-5 text-xl px-1 cursor-pointer my-2 outline-none border-none bg-slate-900"
-                                />
-                            </div>
-                        </form>
-                    </div>
-                    <!-- ============ Form to add Transaction ========= -->
+                    <!-- ============ Form to Add Accounts ========= -->
+
                 </div>
                 <!-- ============ Content ============= -->
             </main>
