@@ -1,3 +1,28 @@
+<?php
+
+include("../controllers/userController.php");
+
+
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+    $username = $_POST["username"];
+    $pw = password_hash($_POST["pw"],PASSWORD_BCRYPT);
+
+
+    $loggingUser = new UserController();
+    $loggingUser->login($username,$pw);
+}
+
+
+
+
+
+
+?>
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,6 +42,9 @@
          </div>
          <div class="w-[20%] mx-auto">
             <input type="submit" value="submit" class="w-full text-white bg-gradient-to-r from-amber-500 to-amber-300 py-[0.25rem] rounded-lg font-semibold cursor-pointer">
+         </div>
+         <div class="flex w-full justify-center">
+        
          </div>
      </form>
 </body>
