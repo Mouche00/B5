@@ -133,7 +133,7 @@ $data_users=$user->displayUser();
           </li>
           <li class="my-2">
             <a
-              href="../../../Distributer.html"
+              href="../admin/Distributer.php"
               class="text-lf font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500 bg-gray-900 bg-opacity-20"
             >
               <i

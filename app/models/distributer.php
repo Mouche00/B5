@@ -2,7 +2,7 @@
 
     require_once("DataProvider.php");
 
-    class Distibuter extends DataProvider {
+    class Distributer extends DataProvider {
         
         public function insert($adress, $bankId){
             try {
