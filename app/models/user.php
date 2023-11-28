@@ -90,12 +90,21 @@ public function deleteUser($id) {
 }
 
 
+public function getUserByUsername($username){
+    $db = $this->connect();
+    $fetchUserQuery = "select * from users where username = :username";
+    $stmt = $db->prepare($fetchUserQuery);
+    $stmt->bindParam(":username",$username,PDO::PARAM_STR);
+
+    try{
+        $stmt->execute();
+        $userData = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $userData;
+    }
+    catch(PDOException $e){
+        die("invalid search query ". $e->getMessage());
+    }
 }
-
-
-
-
-
-
+}
 
 ?>

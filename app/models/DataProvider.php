@@ -1,7 +1,7 @@
 <?php
 
 const CONFIG = [
-    'db'=>'mysql:=db_bankmanagement;host=localhost;port:3306',
+    'db'=>'mysql:host=localhost;dbname=db_bankmanagement',
     'db_user' => 'root',
     'db_password' => ''
 ];
@@ -9,11 +9,40 @@ const CONFIG = [
 class DataProvider {
     protected function connect() {
         try {
-           return new PDO(CONFIG['db'],CONFIG['db_user'],CONFIG['db_password']);
+            $dsn = CONFIG['db'];
+            $username = CONFIG['db_user'];
+            $password = CONFIG['db_password'];
+
+            return new PDO($dsn, $username, $password, [
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+            ]);
 
         } catch (PDOException $e) {
+            // Log or handle the exception appropriately
+            error_log('Connection failed: ' . $e->getMessage());
             return null;
         }
     }
+
+        
+    
+    // protected function connect() {
+    //     try {
+    //        return new PDO(CONFIG['db'],CONFIG['db_user'],CONFIG['db_password']);
+
+    //     } catch (PDOException $e) {
+    //         return null;
+    //     }
+    // }
+}
+
+
+
+function redirect($url, $statusCode = 303)
+{
+   header('Location: ' . $url, true, $statusCode);
+   die();
 }
 ?>
+

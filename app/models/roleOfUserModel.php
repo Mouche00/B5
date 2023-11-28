@@ -7,6 +7,9 @@ class RoleOfUser extends DataProvider{
     private $userId;
     private $roleName;
 
+   
+    
+
     public function __construct($id,$userId,$roleName){
         $this->id = $id;
         $this->userId = $userId;
@@ -32,19 +35,21 @@ class RoleOfUser extends DataProvider{
         $this->roleName = $roleName;
     }
 
-    public function getAllRolesOfUsers(){
+    public function getRoleByUserId($userId){
         $db = $this->connect();
-        $fetchRoleOfUserDataQuery = "select * from roleofuser";
+        $fetchRoleOfUserDataQuery = "select * from roleofuser where userId = :userId";
         $stmt = $db->prepare($fetchRoleOfUserDataQuery);
+        $stmt->bindParam(":userId", $userId,PDO::PARAM_INT);
         try{
             $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);  
+            return $stmt->fetch(PDO::FETCH_ASSOC);  
         } 
         catch(PDOException $e){
             die("invalid select query" . $e->getMessage());
         }
     }
-
+ 
+    
     public function addRoleOfUser(){
         $db = $this->connect();
         $addRoleOfUserQuery = "insert into roleofuser(userId,name) values(:userId,:name)";
