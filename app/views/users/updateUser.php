@@ -521,10 +521,11 @@ $data_users=$user->displayUser();
                     name="role"
                     id=""
                     class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
-                    value="<?= $user_edit[0]->name;?>"
+                    disabled
                   >
-                    <option value="">Select Role :</option>
-                    <option value="Admin">Admin</option>
+                    
+                  <option value="client">client</option>
+                    <option value="admin">admin</option>
                   </select>
                 </div>
                 <div class="w-[33%]">

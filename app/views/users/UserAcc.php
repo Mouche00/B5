@@ -10,6 +10,7 @@ $data_acc=$user->displayUserAcc($user_id);
 
 
 
+
 // ($username,$pw,$gendre,$role,$ville, $quartier,$rue,$codePostal,$email,$tel)
 
 
@@ -58,7 +59,7 @@ $data_acc=$user->displayUserAcc($user_id);
           <h2 class="text-2xl font-bold my-5 text-white">General</h2>
           <li class="my-2">
             <a
-              href="../../../bank.php"
+              href="../admin/bank.php"
               class="text-lg font-medium block w-[full] rounded-md h-[60px] flex items-center text-white p-5 group hover:text-red-500"
             >
               <i
@@ -69,7 +70,7 @@ $data_acc=$user->displayUserAcc($user_id);
           </li>
           <li class="my-2">
             <a
-              href="../../../Users.php"
+              href="../admin/Users.php"
               class="active text-lg font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500 bg-gray-900 bg-opacity-20"
             >
               <i
@@ -80,7 +81,7 @@ $data_acc=$user->displayUserAcc($user_id);
           </li>
           <li class="my-2">
             <a
-              href="../../../Accounts.php"
+              href="../admin/Accounts.php"
               class="text-lg font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500 bg-gray-900 bg-opacity-20"
             >
               <i
@@ -91,7 +92,7 @@ $data_acc=$user->displayUserAcc($user_id);
           </li>
           <li class="my-2">
             <a
-              href="../../../Transactions.php"
+              href="../admin/Transactions.php"
               class="text-lg font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500 bg-gray-900 bg-opacity-20"
             >
               <i
@@ -102,7 +103,7 @@ $data_acc=$user->displayUserAcc($user_id);
           </li>
           <li class="my-2">
             <a
-              href="#"
+              href="../admin/Agency.php"
               class="text-lg font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500 bg-gray-900 bg-opacity-20"
             >
               <i
@@ -113,7 +114,7 @@ $data_acc=$user->displayUserAcc($user_id);
           </li>
           <li class="my-2">
             <a
-              href="../../../Distributer.php"
+              href="../admin/Distributer.php"
               class="text-lf font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500 bg-gray-900 bg-opacity-20"
             >
               <i
@@ -150,7 +151,11 @@ $data_acc=$user->displayUserAcc($user_id);
               <h3
                 class="text-orange-600 text-3xl font-bold tracking-widest mb-2"
               >
-              <?php echo $data_acc[0]->username?> Accounts
+              <?php  if(!empty($data_acc)){
+echo $data_acc[0]->username;
+              }else{
+                 echo "This User Has No Accounts Yet";
+              } ?>
               </h3>
               <p class="text-xl">Our Users around The world</p>
             </div>
@@ -177,10 +182,11 @@ $data_acc=$user->displayUserAcc($user_id);
               </thead>
               <tbody>
 
-              
-
               <?php 
-              foreach($data_acc as $duser) {
+              if(!empty($data_acc)){
+
+                foreach($data_acc as $duser) {
+              
               ?>
                 <tr class="h-[50px]">
                
@@ -215,6 +221,8 @@ $data_acc=$user->displayUserAcc($user_id);
                  
                 </tr>
                 <?php 
+              }} else {
+              
               }
               ?>
               </tbody>
@@ -357,7 +365,7 @@ $data_acc=$user->displayUserAcc($user_id);
                     type="text"
                     name="postal"
                     class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
-                    placeholder="Enter Code postal "
+                    placeholder="Enter Code postal"
                   />
                 </div>
               </div>
