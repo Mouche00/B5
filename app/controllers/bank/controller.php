@@ -5,17 +5,28 @@
     if (isset($_POST['submit'])) {
         $bank = new bank();
         $name = $_POST['name'];
+        $imgTmp = $_FILES['image']['tmp_name'];
+        $imgName = $_FILES['image']['name'];
+        $imgPath = '../../../public/assets/uploads/' . $imgName;
+        $result = move_uploaded_file($imgTmp, $imgPath);
+        if ($result) {
 
-        if ($_POST['mode'] == "edit") {
-            $id = $_POST["id"];
-            $bank->updateBank($id, $name);
+            if ($_POST['mode'] == "edit") {
+                $id = $_POST["id"];
+                $bank->updateBank($id, $name, $imgPath);
+            } else {
+                $bank->addBank($name, $imgPath);
+            }
         } else {
-            $bank->addBank($name);
+            echo "File failed to upload";
         }
 
 
-        var_dump($_POST['mode']);
-        echo "hello";
+        echo "<br>";
+        var_dump($_FILES['image']['tmp_name']);
+        echo "<br>";
+        var_dump($imgPath);
+        echo "<br>";
 
         header('Location: ../../views/admin/Bank.php');
     }

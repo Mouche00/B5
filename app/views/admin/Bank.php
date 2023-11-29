@@ -183,10 +183,14 @@
                     </div>
                     <!-- ============ Form to add New Bank ========= -->
                     <div>
-                        <form action="../../controllers/bank/controller.php" method="post" class="absolute top-[50%] left-[30%] translate-y-[-50%] bg-white p-5 w-[650px] rounded-md shadow-sm z-50 hidden" id="Add">
+                        <form action="../../controllers/bank/controller.php" method="post" class="absolute top-[50%] left-[30%] translate-y-[-50%] bg-white p-5 w-[650px] rounded-md shadow-sm z-50 hidden" id="Add" enctype="multipart/form-data">
                             <div>
                                 <label for="" class="text-xl ">Denomination</label>
                                 <input type="text" name="name"  class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100" placeholder="Enter Dènomination ">
+                            </div>
+                            <div>
+                                <label for="" class="text-xl ">Image</label>
+                                <input type="file" name="image"  class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100">
                             </div>
                             <div>
                                 <input type="submit" name="submit"  class="block w-full py-3 text-white text-xl px-1 cursor-pointer my-2 outline-none border-none bg-slate-900">
@@ -198,7 +202,7 @@
                     <!-- ============ Form to Edit Bank ========= -->
                     <div>
                         <?php if(isset($_GET['id'])) { ?>
-                            <form action="../../controllers/bank/controller.php" method="post" class="absolute top-[50%] left-[30%] translate-y-[-50%] bg-white p-5 w-[650px] rounded-md shadow-sm z-50" id="Edit">
+                            <form action="../../controllers/bank/controller.php" method="post" class="absolute top-[50%] left-[30%] translate-y-[-50%] bg-white p-5 w-[650px] rounded-md shadow-sm z-50" id="Edit" enctype="multipart/form-data">
                                 <div>
                                     <?php foreach($banks as $bank): ?>
                                         <?php if($bank->bankId == $_GET['id']){ ?>
@@ -208,7 +212,10 @@
                                         <?php } ?>
                                     <?php endforeach; ?>
                                     <input type="text" name="mode"  class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100 hidden" value="edit" >
-
+                                    <div>
+                                        <label for="" class="text-xl ">Image</label>
+                                        <input type="file" name="image"  class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100">
+                                    </div>
                                 </div>
                                 <div>
                                     <input type="submit" name="submit" value="Edit"  class="block w-full py-3 text-white text-xl px-1 cursor-pointer my-2 outline-none border-none bg-slate-900">
