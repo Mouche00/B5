@@ -1,7 +1,9 @@
 <?php
 require_once("../../models/user.php");
+require_once("../../models/agency.php");
 
 $user = new Users();
+$agencyy = new Agency();
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -24,11 +26,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   }
 
 // ($username,$pw,$gendre,$role,$ville, $quartier,$rue,$codePostal,$email,$tel)
-
+$agency_list=$agencyy->displayAgency();
 
 $data_users=$user->displayUser();  
 
-
+// print_r($agency_list);
 
 ?>
 
@@ -354,7 +356,7 @@ $data_users=$user->displayUser();
                   >
                    
                   <?php 
-                                            foreach($data_users as $user) {
+                                            foreach($agency_list as $user) {
                                                 echo "
                                                 <option value='$user->agencyId'>$user->agencyId</option>
                                                 ";
@@ -369,7 +371,6 @@ $data_users=$user->displayUser();
                     id=""
                     class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
                   >
-                    <option value="">Select Role :</option>
                     <option value="admin">Admin</option>
                     <option value="client">Client</option>
 
