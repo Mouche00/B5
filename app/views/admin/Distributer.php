@@ -249,6 +249,8 @@
                                 <?php endforeach; ?>
                             </select>
                         </div>
+
+                        <input type="text" name="mode"  class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100 hidden" value="add" >
                             
                             <div>
                                 <input

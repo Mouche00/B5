@@ -3,7 +3,7 @@
 const CONFIG = [
     'db'=>'mysql:host=localhost;dbname=db_bankmanagement',
     'db_user' => 'root',
-    'db_password' => ''
+    'db_password' => 'root'
 ];
 
 class DataProvider {
