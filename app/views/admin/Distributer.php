@@ -1,6 +1,8 @@
 
 <?php
 
+    require_once("../../controllers/distributer/controller.php");
+
     // require_once("./app/");
 
 ?>
@@ -156,31 +158,42 @@
                             <thead class="">
                                 <tr class="bg-slate-900 text-white h-[60px]">
                                     <th class="">ID</th>
+                                    <th class="">Longitude</th>
+                                    <th class="">Latitude</th>
                                     <th class="">Address</th>
                                     <th class="">BankID</th>
                                     <th class="">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <!-- <tr class="h-[50px]">
-                                    <td class="text-center">1</td>
-                                    <td class="text-center">1961</td>
-                                    <td class="text-center">6</td>
-                                    <td class="text-center">
-                                        <button
-                                            class="bg-slate-900 text-white w-[35px] h-[35px] rounded-md"
-                                            onclick="updateForm()"
-                                        >
-                                            <i class="fa-solid fa-pen"></i>
-                                        </button>
-                                        <button
-                                            class="bg-slate-900 text-white w-[35px] h-[35px] rounded-md"
-                                            id="addBank"
-                                        >
-                                            <i class="fa-solid fa-trash"></i>
-                                        </button>
-                                    </td>
-                                </tr> -->
+                                <?php foreach($distributers as $distributer): ?>
+                                
+                                    <tr class="h-[50px]">
+                                        <td class="text-center"><?=$distributer['atmId']?></td>
+                                        <td class="text-center"><?=$distributer['longitude']?></td>
+                                        <td class="text-center"><?=$distributer['latitude']?></td>
+                                        <td class="text-center"><?=$distributer['adress']?></td>
+                                        <?php foreach($banks as $bank): ?>
+                                            <?php if($bank->bankId == $distributer['bankId']){ ?>
+                                                <td class="text-center"><?=$bank->name?></td>
+                                            <?php } ?>
+                                        <?php endforeach; ?>
+                                        <td class="text-center">
+                                            <button
+                                                class="bg-slate-900 text-white w-[35px] h-[35px] rounded-md"
+                                                onclick=""
+                                            >
+                                                <a href=<?php echo "Distributer.php?id=" . $distributer['atmId'] ?>><i class="fa-solid fa-pen"></i></a>
+                                            </button>
+                                            <button
+                                                class="bg-slate-900 text-white w-[35px] h-[35px] rounded-md"
+                                                id="addBank"
+                                            >
+                                            <a href=<?php echo "../../controllers/distributer/controller.php?bankId=" . $distributer['atmId'] ?>><i class="fa-solid fa-trash"></i></a>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
                             </tbody>
                         </table>
                     </div>
@@ -205,13 +218,35 @@
                         </div>
 
                         <div class="w-full">
+                            <label for="" class="text-xl">Longitude</label>
+                            <input
+                                type="text"
+                                name="longitude"
+                                class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
+                                placeholder="Enter Longitude"
+                            />
+                        </div>
+
+                        <div class="w-full">
+                            <label for="" class="text-xl">Latitude</label>
+                            <input
+                                type="text"
+                                name="latitude"
+                                class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
+                                placeholder="Enter Latitude"
+                            />
+                        </div>
+
+                        <div class="w-full">
                             <label for="" class="text-xl">Bank</label>
                             <select
                                 name="bank"
                                 id=""
                                 class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
                             >
-                                <option value="1">Admin</option>
+                                <?php foreach($banks as $bank): ?>
+                                    <option value="<?=$bank->bankId?>"><?=$bank->name?></option>
+                                <?php endforeach; ?>
                             </select>
                         </div>
                             
@@ -224,25 +259,80 @@
                             </div>
                         </form>
                     </div>
-                    <!-- ============ Form to add Transaction ========= -->
                     <!-- ============ Form to Edit Distributeur ========= -->
                     <div>
-                        <form
-                            action=""
-                            method="get"
-                            class="absolute top-[50%] left-[30%] translate-y-[-50%] bg-white p-5 w-[650px] rounded-md shadow-sm z-50 hidden"
-                            id="Edit"
-                        >
- 
-                            <div>
-                                <input
-                                    type="submit"
-                                    name="submit"
-                                    value="Edit"
-                                    class="block w-full py-3 text-white mt-5 text-xl px-1 cursor-pointer my-2 outline-none border-none bg-slate-900"
-                                />
-                            </div>
-                        </form>
+                        <?php if (isset($_GET['id'])) { ?>
+                            <form
+                                action="../../controllers/distributer/controller.php"
+                                method="post"
+                                class="absolute top-[50%] left-[30%] translate-y-[-50%] bg-white p-5 w-[650px] rounded-md shadow-sm z-50"
+                                id="Edit"
+                            >
+                            
+                            <?php foreach($distributers as $distributer): ?>
+                                <?php if($distributer['atmId'] == $_GET['id']) { ?>
+                                    <div class="w-full">
+                                        <input
+                                            type="text"
+                                            name="id"
+                                            class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100 hidden"
+                                            value="<?=$distributer['atmId']?>"
+                                        />
+                                    </div>
+
+                                    <div class="w-full">
+                                        <label for="" class="text-xl">Address</label>
+                                        <input
+                                            type="text"
+                                            name="address"
+                                            class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
+                                            value="<?=$distributer['adress']?>"
+                                        />
+                                    </div>
+
+                                    <div class="w-full">
+                                        <label for="" class="text-xl">Longitude</label>
+                                        <input
+                                            type="text"
+                                            name="longitude"
+                                            class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
+                                            value="<?=$distributer['longitude']?>"
+                                        />
+                                    </div>
+
+                                    <div class="w-full">
+                                        <label for="" class="text-xl">Latitude</label>
+                                        <input
+                                            type="text"
+                                            name="latitude"
+                                            class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
+                                            value="<?=$distributer['latitude']?>"
+                                        />
+                                    </div>
+
+                                    <div class="w-full">
+                                        <input
+                                            type="text"
+                                            name="bank"
+                                            class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100 hidden"
+                                            value="<?=$distributer['bankId']?>"
+                                        />
+                                    </div>
+
+                                    <input type="text" name="mode"  class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100 hidden" value="edit" >
+            
+                                    <div>
+                                        <input
+                                            type="submit"
+                                            name="submit"
+                                            value="Edit"
+                                            class="block w-full py-3 text-white mt-5 text-xl px-1 cursor-pointer my-2 outline-none border-none bg-slate-900"
+                                        />
+                                    </div>
+                                <?php } ?>
+                            <?php endforeach; ?>
+                            </form>
+                        <?php } ?>
                     </div>
                     <!-- ============ Form to add Transaction ========= -->
                 </div>
@@ -253,11 +343,13 @@
                 class="bg-black bg-opacity-60 w-full h-[100vh] absolute top-0 left-0 hidden"
                 id="overlayAdd"
             ></div>
-            <div
-                class="bg-black bg-opacity-60 w-full h-[100vh] absolute top-0 left-0 hidden"
-                id="overlayEdit"
-                onclick="updateForm()"
-            ></div>
+            <?php if (isset($_GET['id'])) { ?>
+                <div
+                    class="bg-black bg-opacity-60 w-full h-[100vh] absolute top-0 left-0"
+                    id="overlayEdit"
+                    onclick="updateForm()"
+                ></div>
+            <?php } ?>
         </section>
         scr
     </body>

@@ -3,15 +3,16 @@
 require_once('DataProvider.php');
 
 class bank extends DataProvider {
-   public function addBank($name){
+   public function addBank($name, $logo){
     $db=$this->connect();
     if($db==null){
         return null;
    }
-   $sql= 'INSERT INTO bank (name,logo) VALUES(:name,"../../../public/assets/images/logo-black.png")';
+   $sql= 'INSERT INTO bank (name,logo) VALUES(:name, :logo)';
    $stmt = $db->prepare($sql);
    $stmt->execute([
-    ":name" => $name
+    ":name" => $name,
+    ":logo" => $logo
    ]);
    $db=null;
    $stmt=null;
@@ -37,7 +38,7 @@ public function displayBank(){
 
 
 
-public function updateBank($bankId,$name) {
+public function updateBank($bankId, $name, $logo) {
       
     $db = $this->connect();
 
@@ -45,13 +46,14 @@ public function updateBank($bankId,$name) {
         return;
     }
 
-    $sql = "UPDATE bank SET name = :name WHERE bankId = :bankId";
+    $sql = "UPDATE bank SET name = :name, logo = :logo WHERE bankId = :bankId";
 
     $stmt = $db->prepare($sql);
 
     $stmt->execute([
     ':name'=> $name,
-    ":bankId" => $bankId
+    ":bankId" => $bankId,
+    ":logo" => $logo
        ]);
 
     $stmt = null;

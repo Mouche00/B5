@@ -40,10 +40,49 @@
             }
             $sql = "SELECT * FROM account";
 
-            $stmt = $db_connection->prepare($sql);
-            $accounts = $stmt->execute();
-            
+            $stmt = $db_connection->query($sql);
+
+            $accounts = $stmt->fetchAll(PDO::FETCH_OBJ);
+
             return $accounts;
+
+        }
+
+        public function displayAccount($accountID) {
+            
+            $db_connection = $this->connect();
+            if ($db_connection == null) {
+                return null;
+            }
+            $sql = "SELECT * FROM account WHERE accountId = $accountID";
+
+            $stmt = $db_connection->query($sql);
+
+            $account = $stmt->fetchAll(PDO::FETCH_OBJ);
+
+            return $account;
+
+
+        }
+
+        public function deleteAccount($accountID) {
+
+            $db_connection = $this->connect();
+
+            if ($db_connection == null) {
+                return null;
+            }
+
+            $sql = "DELETE FROM account WHERE accountId = $accountID";
+
+            $stmt = $db_connection->prepare($sql);
+
+            if ($stmt->execute()) {
+                echo "Deleted";
+            }
+
+            $db_connection = null;
+            $stmt = null;
 
         }
 
@@ -54,9 +93,19 @@
                 return null;
             }
             
-            $sql = "UPDATE account SET (balance = $balance , rib = $rib) WHERE id = $accountID";
+            $sql = "UPDATE account SET balance = :balance , RIB = :rib WHERE accountId = $accountID";
 
             $stmt = $db_connection->prepare($sql);
+
+
+            $stmt->execute([
+                ":balance"=> $balance,
+                ":rib"=> $rib,
+
+            ]);
+
+            $db_connection = null;
+            $stmt = null;
 
         }
 

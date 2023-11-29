@@ -391,6 +391,7 @@ $data_users=$user->displayUser();
                 <input
                   type="submit"
                   name="submit"
+                  value="Envoyer"
                   class="block w-full py-3 text-white text-xl px-1 cursor-pointer mt-5 outline-none border-none bg-slate-900"
                 />
               </div>
