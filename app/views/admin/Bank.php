@@ -192,6 +192,7 @@
                                 <label for="" class="text-xl ">Image</label>
                                 <input type="file" name="image"  class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100">
                             </div>
+                            <input type="text" name="mode"  class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100 hidden" value="add" >
                             <div>
                                 <input type="submit" name="submit"  class="block w-full py-3 text-white text-xl px-1 cursor-pointer my-2 outline-none border-none bg-slate-900">
                             </div>
