@@ -4,7 +4,7 @@
     require_once("../../controllers/distributer/controller.php");
     require_once './check.php';
 
-    // require_once("./app/");
+
 
 ?>
 

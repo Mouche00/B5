@@ -112,6 +112,33 @@
 
 
 
+        public function displayAccTra($id){
+
+            $db=$this->connect();
+            if($db==null){
+                return null;
+           }
+        
+        $query = 'SELECT transactions.*, users.username
+        FROM transactions
+        JOIN account ON transactions.accountId = account.accountId
+        JOIN users ON account.userId = users.userId
+        WHERE transactions.accountId=:id; ';
+        
+        
+        $stmt = $db->prepare($query);
+        $stmt->execute([
+            "id"=> $id,]);
+        
+           $acc_trans=$stmt->fetchAll(PDO::FETCH_OBJ);
+        
+           $query = null;
+           $db=null;
+           return $acc_trans;
+        }
+
+
+
 
 
 

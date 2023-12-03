@@ -211,7 +211,7 @@
                                                 <td class="text-center"><?= $username->username  ?></td>
 
 
-                                            <?php   } ?>0 .  
+                                            <?php   } ?>
 
 
                                     <td class="text-center">
@@ -229,6 +229,7 @@
                                             <i class="fa-solid fa-trash"></i>
                                     </a>
                                         <a
+                                        href="../accounts/acc_trans.php?id=<?php echo $account->accountId ?>"
                                             class="bg-slate-900 text-white w-[35px] h-[35px] rounded-md inline-block leading-[35px]"
                                         >
                                             <i class="fa-solid fa-right-left"></i>

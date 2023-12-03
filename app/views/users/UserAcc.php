@@ -195,29 +195,26 @@ echo $data_acc[0]->username;
                   <td class="text-center"><?php echo $duser->RIB ?></td>
                   <td class="text-center"><?php echo $duser->username?></td>
                   <td class="text-center">
-                    <button
-                      class="bg-slate-900 text-white w-[35px] h-[35px] rounded-md"
-                      
-                    >
-                    <a href="app/views/users/updateUser.php?user_id=<?= $duser->userId;?>"> <i class="fa-solid fa-pen"></i></a>
-                     
-                    </button>
-                    <button
-                      class="bg-slate-900 text-white w-[35px] h-[35px] rounded-md"
-                    >
-                    <a href="app/views/users/deleteUser.php?user_id=<?= $duser->userId;?>"><i class="fa-solid fa-trash"></i></a>
-                      
-                    </button>
-
-                    <button
-                      class="bg-slate-900 text-white w-[35px] h-[35px] rounded-md"
-                    >
-                    <a href="app/views/users/UserAcc.php?user_id=<?= $duser->userId;?>">
-                    <i class="fa-solid fa-right-left"></i>
-                </a>
-                      
-                    </button>
-                  </td>
+                                        <a  
+                                        href="../../controllers/accounts/update_account.php?id=<?php echo $duser->accountId ?>"
+                                            class="bg-slate-900 text-white w-[35px] h-[35px] rounded-md inline-block leading-[35px] "
+                                            onclick="updateForm()"
+                                        >
+                                            <i class="fa-solid fa-pen"></i>
+                                    </a>
+                                        <a
+                                            href="../../controllers/accounts/delete_account.php?id=<?php echo $duser->accountId ?>"
+                                            class="bg-slate-900 text-white w-[35px] h-[35px] rounded-md inline-block leading-[35px]"
+                                        >
+                                            <i class="fa-solid fa-trash"></i>
+                                    </a>
+                                        <a
+                                        href="../accounts/acc_trans.php?id=<?php echo $duser->accountId ?>"
+                                            class="bg-slate-900 text-white w-[35px] h-[35px] rounded-md inline-block leading-[35px]"
+                                        >
+                                            <i class="fa-solid fa-right-left"></i>
+                                    </a>
+                                    </td>
                  
                 </tr>
                 <?php 
