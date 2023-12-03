@@ -1,47 +1,33 @@
-
-<?php 
-
-    require_once '../../models/accounts.php';
-    require_once '../../models/user.php';
-    require_once '../../models/DataProvider.php';
-
-
-
-
-
-    // FEtch Users
-    $user = new Users();
-    $users = $user->displayUser();
-
-    // Fetch Accounts
-    $newAccount = new Accounts();
-    $Accounts = $newAccount->displayAccounts();
-
-
-    
-
-
-
-
-
-
-?>
-
-
 <?php
+require_once("../../models/accounts.php");
+require_once("../../models/transaction.php");
 
 
+$transaction = new transaction();
+
+
+  // Fetch Accounts
+  $newAccount = new Accounts();
+  $Accounts = $newAccount->displayAccounts();
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  $type=$_POST['type'];
+  $amount=$_POST['amount'];
+  $accountId=$_POST['accountId'];
+ 
+  $transaction->addTransaction($type,$amount,$accountId);
+    
+  }
+
+
+$data_trans=$transaction->displayTransaction();
+
+// var_dump($data_agence);
+// echo '<br>';
+// var_dump($bankdata);
 
 
 ?>
-
-
-
-
-
-
-
-
 <!DOCTYPE html>
 <html>
     <head>
@@ -76,7 +62,7 @@
                     <li class="my-2">
                         <a
                             href="bank.php"
-                            class="text-lg font-medium block w-[full] rounded-md h-[60px] flex items-center text-white p-5 group hover:text-red-500"
+                            class="text-lg font-medium block w-[full] rounded-md h-[60px] flex text-white items-center p-5 group hover:text-red-500"
                         >
                             <i
                                 class="fa-solid fa-building-columns mr-5 text-lg group-hover:text-red-500"
@@ -87,7 +73,7 @@
                     <li class="my-2">
                         <a
                             href="Users.php"
-                            class="text-lg font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500 bg-gray-900 bg-opacity-20"
+                            class="text-lg font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500"
                         >
                             <i
                                 class="fa-solid fa-user mr-5 text-lg group-hover:text-red-500"
@@ -98,7 +84,7 @@
                     <li class="my-2">
                         <a
                             href="Accounts.php"
-                            class="active text-lg font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500"
+                            class="text-lg font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500"
                         >
                             <i
                                 class="fa-solid fa-file mr-5 text-lg group-hover:text-red-500"
@@ -109,8 +95,9 @@
                     <li class="my-2">
                         <a
                             href="Transactions.php"
-                            class="text-lg font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500 bg-gray-900 bg-opacity-20"
+                            class="active font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500"
                         >
+                            <i class="fa-solid"></i>
                             <i
                                 class="fa-solid fa-right-left mr-5 text-lg group-hover:text-red-500"
                             ></i
@@ -120,10 +107,10 @@
                     <li class="my-2">
                         <a
                             href="Agency.php"
-                            class="text-lg font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500 bg-gray-900 bg-opacity-20"
+                            class=" text-lg font-medium block w-[full] rounded-md h-[60px] text-white flex items-center p-5 group hover:text-red-500"
                         >
                             <i
-                                class="fa-solid fa-building text-white mr-5 text-lg group-hover:text-red-500"
+                                class="fa-solid fa-building mr-5 text-lg group-hover:text-red-500"
                             ></i>
                             Agnecy</a
                         >
@@ -173,16 +160,16 @@
                             <h3
                                 class="text-orange-600 text-3xl font-bold tracking-widest mb-2"
                             >
-                                Accounts
+                                Transactions
                             </h3>
-                            <p class="text-xl">Accounts Lists</p>
+                            <p class="text-xl">Our Banks around The world</p>
                         </div>
                         <div>
                             <button
                                 class="bg-slate-900 text-white w-[160px] h-[50px] rounded-md"
                                 id="addBank"
                             >
-                                Add Account
+                                Add Transactions
                             </button>
                         </div>
                     </div>
@@ -191,134 +178,142 @@
                         <table class="w-full table-auto">
                             <thead class="">
                                 <tr class="bg-slate-900 text-white h-[60px]">
+                                    <th class="">TransactionID</th>
+                                    <th class="">Type</th>
+                                    <th class="">Amount</th>
                                     <th class="">AccountID</th>
-                                    <th class="">Balance</th>
-                                    <th class="">R.I.B</th>
-                                    <th class="">Account owner</th>
+                                    <th class="">Username</th>
                                     <th class="">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
+                            <?php 
+              foreach($data_trans as $dagence) {
+              ?>
                                 <tr class="h-[50px]">
-                                    <?php foreach($Accounts as $account) { ?> 
-                                    
-                                    
-                                    <td class="text-center"><?php echo $account->accountId ?></td>
-                                    <td class="text-center"><?php echo $account->balance ?></td>
-                                    <td class="text-center"><?php echo $account->RIB ?></td>
-
-                                        <?php
-                                            $db = new DataProvider();
-                                            $db_connect = $db->connect();
-                                            if ($db_connect == null) {
-                                                return null;
-                                            }
-                                            $sql = "SELECT * FROM users WHERE userId = $account->userId";
-
-                                            $stmt = $db_connect->query($sql);
-                                            $stmt->execute();
-
-                                            $usernames = $stmt->fetchAll(PDO::FETCH_OBJ);
-
-                                        
-                                        ?>
-
-                                            <?php foreach($usernames as $username)  { ?>
-                                                <td class="text-center"><?= $username->username  ?></td>
-
-
-                                            <?php   } ?>
-
-
+                                <td class="text-center"><?php echo $dagence->transactionId ?></td>
+                  <td class="text-center"><?php echo $dagence->type ?></td>
+                  <td class="text-center"><?php echo $dagence->amount ?></td>
+                  <td class="text-center"><?php echo $dagence->accountId ?></td>
+                  <td class="text-center"><?php echo $dagence->username ?></td>
                                     <td class="text-center">
-                                        <a  
-                                        href="../../controllers/accounts/update_account.php?id=<?php echo $account->accountId ?>"
-                                            class="bg-slate-900 text-white w-[35px] h-[35px] rounded-md inline-block leading-[35px] "
-                                            onclick="updateForm()"
+                                        <button
+                                            class="bg-slate-900 text-white w-[35px] h-[35px] rounded-md"
+                                            id="addBank"
                                         >
-                                            <i class="fa-solid fa-pen"></i>
-                                    </a>
-                                        <a
-                                            href="../../controllers/accounts/delete_account.php?id=<?php echo $account->accountId ?>"
-                                            class="bg-slate-900 text-white w-[35px] h-[35px] rounded-md inline-block leading-[35px]"
-                                        >
-                                            <i class="fa-solid fa-trash"></i>
-                                    </a>
-                                        <a
-                                        href="../accounts/acc_trans.php?id=<?php echo $account->accountId ?>"
-                                            class="bg-slate-900 text-white w-[35px] h-[35px] rounded-md inline-block leading-[35px]"
-                                        >
-                                            <i class="fa-solid fa-right-left"></i>
-                                    </a>
+                                        <a href="../../../app/views/transaction/deleteTransaction.php?transaction_id=<?= $dagence->transactionId;?>"><i class="fa-solid fa-trash"></i></a>
+                                        </button>
                                     </td>
                                 </tr>
-                                    <?php }?>
+                                <?php 
+              }
+              ?>
                             </tbody>
                         </table>
                     </div>
-                    <!-- ============ Form to add Accounts ========= -->
+                    <!-- ============ Form to Add Transaction ========= -->
+                    <div>
+            <form
+              action=""
+              method="post"
+              class="absolute top-[50%] left-[20%] translate-y-[-50%] bg-white p-5 w-[1000px] rounded-md shadow-sm z-50 hidden"
+              id="Add"
+            >
+              <h1 class="text-center font-semibold text-3xl my-5">
+                Add new Transaction
+              </h1>
+
+
+              <div class="flex gap-5">
+              <div class="w-[50%]">
+                  <label for="" class="text-xl">Type</label>
+                  <select
+                    name="type"
+                    id="type"
+                    class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
+                  >
+                    <option value="Debit">Debit</option>
+                    <option value="Credit">Credit</option>
+
+                  </select>
+            </div>
+                <div class="w-[50%]">
+                  <label for="" class="text-xl">Amount</label>
+                  <input
+                    type="text"
+                    name="amount"
+                    placeholder="amount"
+                    class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
+                  />
+                </div>
+              </div>
+              <div class="flex gap-4">
+                <div class="w-[50%]">
+                  <label for="" class="text-xl">Account</label>
+                  <select
+                    name="accountId"
+                    id=""
+                    class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
+                  >
+                 
+                  <?php 
+                                            foreach($Accounts as $data) {
+                                                echo "
+                                                <option value='$data->accountId'>$data->accountId</option>
+                                                ";
+                                            }
+                                        ?>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <input
+                  type="submit"
+                  name="submit"
+                  class="block w-full py-3 text-white text-xl px-1 cursor-pointer mt-5 outline-none border-none bg-slate-900"
+                />
+              </div>
+            </form>
+          </div>
+                    <!-- ============ Form to add Agency ========= -->
+                    <!-- ============ Form to Edit Agency ========= -->
                     <div>
                         <form
-                            action="../../controllers/accounts/add_account.php"
-                            method="post"
-                            class="absolute top-[50%] left-[35%] translate-y-[-50%] bg-white p-5 w-[500px] rounded-md shadow-sm z-50 hidden"
-                            id="Add"
+                            action=""
+                            method="get"
+                            class="absolute top-[50%] left-[30%] translate-y-[-50%] bg-white p-5 w-[650px] rounded-md shadow-sm z-50 hidden"
+                            id="Edit"
                         >
-                            <h1 class="text-center font-semibold text-3xl my-5">
-                                Add Account
-                            </h1>
-
-                                <div class="">
-                                    <label for="" class="text-xl"
-                                        >Balance</label
-                                    >
-                                    <input
-                                        type="text"
-                                        name="Balance"
-                                        class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
-                                        placeholder="Enter Balance "
-                                    />
-                                </div>
-                                <div class="">
-                                    <label for="" class="text-xl">R.I.B</label>
-                                    <input
-                                        type="text"
-                                        name="rib"
-                                        class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
-                                        placeholder="Enter R.I.B"
-                                    />
-                                </div>
-                                <!-- ========= fetch users ======= -->
-                                
-
-
-                                <div >
-                                    <label for="" class="text-xl">Account owner</label>
-                                    <select name="accountOwner" id="" class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"> 
-                                        <option value="">Select Account owner :</option>
-                                        <?php 
-                                            foreach($users as $user) {
-                                                echo "
-                                                <option value='$user->userId'>$user->username</option>
-                                                ";
-                                            }   
-                                        ?>
-
-
-                                    </select>
-                                </div>
-
+                            <div>
+                                <label for="" class="text-xl">Latitude</label>
+                                <input
+                                    type="text"
+                                    name="amount"
+                                    class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
+                                    placeholder="Latitude..."
+                                />
+                            </div>
+                            <div>
+                                <label for="" class="text-xl">Logitude</label>
+                                <input
+                                    type="text"
+                                    name="amount"
+                                    class="block w-full py-3 text-xl px-1 placeholder:text-lg my-2 outline-none border-none bg-gray-100"
+                                    placeholder="Logitude..."
+                                />
+                            </div>
                             <div>
                                 <input
                                     type="submit"
                                     name="submit"
-                                    class="block w-full py-3 text-white text-xl px-1 cursor-pointer mt-5 outline-none border-none bg-slate-900"
+                                    value="Edit"
+                                    class="block w-full py-3 text-white mt-5 text-xl px-1 cursor-pointer my-2 outline-none border-none bg-slate-900"
                                 />
                             </div>
                         </form>
                     </div>
-                    <!-- ============ Form to Add Accounts ========= -->
-
+                    <!-- ============ Form to add Transaction ========= -->
                 </div>
                 <!-- ============ Content ============= -->
             </main>

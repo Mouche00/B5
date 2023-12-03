@@ -3,7 +3,7 @@
 
     require_once("../../controllers/distributer/controller.php");
 
-    // require_once("./app/");
+
 
 ?>
 
