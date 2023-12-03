@@ -10,22 +10,32 @@ class UserController extends DataProvider{
 
     public function login ($username,$pw){
         
-        $loggingUser = new user();
+        $loggingUser = new Users();
         $loggingUserData = $loggingUser->getUserByUsername($username);
 
-        if($loggingUserData && password_verify($loggingUserData["pw"],$pw)){
-           
-            $loggingUserRole = new RoleOfUser(1,1,'admin');
-            $roleOfLoggingUserData = $loggingUserRole->getRoleByUserId($loggingUserData["userId"]);
+        var_dump($loggingUserData && password_verify($pw, $loggingUserData->pw));
 
-            if($roleOfLoggingUserData["roleName"] == "admin"){
-                
+        if($loggingUserData && password_verify($pw, $loggingUserData->pw)){
+
+            $roleOfLoggingUserData = $loggingUser->getRoleByUsername($username);
+
+            // var_dump($loggingUser->getRoleByUsername($username));
+
+
+            if($roleOfLoggingUserData->roleName == "admin"){
+                $_SESSION["username"] = $username;
+                $_SESSION["role"] = "admin";
+                redirect("../views/admin/Users.php",false);
+                // header("Location: ../views/admin/Bank.php");
+            }else{
+                $_SESSION["username"] = $username;
+                $_SESSION["role"] = "client";
+                redirect("../views/client/index.php",false);
             }
-     
-        }
-
-        else{
+        
+        } else{
             
+            // header("Location: ../views/admin/Bank.php");
             redirect("../views/login.php",false);
 
         }

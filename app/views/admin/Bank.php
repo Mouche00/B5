@@ -2,6 +2,7 @@
 <?php
 
     require_once("../../controllers/bank/controller.php");
+    require_once './check.php';
 
     // var_dump($banks);
 
@@ -107,32 +108,14 @@
                         >
                     </li>
                 </ul>
+                <?php include("./logout.php"); ?>
+
             </aside>
             <!-- =========== Aside bar =========== -->
             <!-- =========== Content =========== -->
             <main class="bg-gray-100 flex-grow h-[100vh] relative">
                 <!-- ============== header =========== -->
-                <div class="bg-white flex items-center justify-between p-5">
-                    <h2 class="text-2xl tracking-widest font-bold">
-                        Dashboard
-                    </h2>
-                    <div class="flex gap-4 items-center mr-5">
-                        <div>
-                            <h3 class="font-medium text-lg mb-1">
-                                Abdelouahed Senane
-                            </h3>
-                            <span
-                                class=" text-gray-500 text-md block text-right"
-                                >Admin</span
-                            >
-                        </div>
-                        <img
-                            src="../../../public/assets/images/admin.jpg"
-                            alt="profile"
-                            class="w-[60px] h-[60px] rounded-full"
-                        />
-                    </div>
-                </div>
+                <?php include("./header.php"); ?>
                 <!-- ========== End Header =========== -->
                 <!-- ============ Content ============= -->
                 <div class="p-6 bg-white m-5">

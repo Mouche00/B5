@@ -203,6 +203,60 @@ $stmt->execute([
    return $acc_user;
 }
 
+public function getUserByUsername($username){
+
+    $db = $this->connect();
+
+    if ($db == null){
+        return null;
+    }
+
+    $query = "SELECT * FROM users WHERE username = :username";
+
+    $stmt = $db->prepare($query);
+
+    $stmt->execute([
+        ":username" => $username
+    ]);
+
+    $data = null;
+
+    $data = $stmt->fetch(PDO::FETCH_OBJ);
+
+    $query = null;
+    $db = null;
+    return $data;
+
+}
+
+public function getRoleByUsername($username){
+
+    $db = $this->connect();
+
+    if ($db == null){
+        return null;
+    }
+
+    $query = "SELECT roleofuser.roleName FROM users JOIN roleofuser ON users.userId = roleofuser.userId WHERE users.username = :username";
+
+    $stmt = $db->prepare($query);
+
+    $stmt->execute([
+        ":username" => $username
+    ]);
+
+    $data = null;
+
+    $data = $stmt->fetch(PDO::FETCH_OBJ);
+
+    $query = null;
+    $db = null;
+    return $data;
+
+}
+
+
+
 
 
 }

@@ -5,7 +5,8 @@ include("../controllers/userController.php");
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
     $username = $_POST["username"];
-    $pw = password_hash($_POST["pw"],PASSWORD_BCRYPT);
+    $pw = $_POST["pw"];
+    // $pw = password_hash($_POST["pw"], PASSWORD_BCRYPT);
 
 
     $loggingUser = new UserController();
