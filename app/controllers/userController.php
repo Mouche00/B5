@@ -30,7 +30,7 @@ class UserController extends DataProvider{
             }else{
                 $_SESSION["username"] = $username;
                 $_SESSION["role"] = "client";
-                redirect("../views/client/index.php",false);
+                redirect("../views/client/index.php?id=" . $loggingUserData->userId,false);
             }
         
         } else{
