@@ -9,6 +9,40 @@
         redirect("../../views/login.php",false);
     }
 
+    $dsn = "mysql:host=localhost;dbname=db_bankmanagement;";
+    $username = "root";
+    $pw = "root";
+
+    $db = new PDO($dsn,$username,$pw);
+    $db->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+
+
+    if($_GET["id"]){
+        $id = $_GET["id"];
+
+        $bringUserDataQuery = "select * from users join account on users.userId = account.userId join transactions on account.accountId = transactions.transactionId where users.userId = :userId";
+        $bringUserAccounts = "select * from account where userId = :id";
+        $fetchUserDataquery = "select * from users where userId = :UID";
+        $stmt = $db->prepare($bringUserAccounts);
+        $stmt2 = $db->prepare($bringUserDataQuery);
+        $stmt3 = $db->prepare($fetchUserDataquery);
+
+        $stmt->bindParam(":id",$id,PDO::PARAM_INT);
+        $stmt2->bindParam(":userId",$id,PDO::PARAM_INT);
+        $stmt3->bindParam("UID",$id,PDO::PARAM_INT);
+        try{
+            $stmt->execute();
+            $stmt2->execute();
+            $stmt3->execute();
+            $accountsOfUser = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $transactionsOfAccount = $stmt2->fetchAll(PDO::FETCH_ASSOC);
+            $accountDetails = $stmt3->fetch(PDO::FETCH_ASSOC);
+        }
+        catch(PDOException $e){
+            die("invalid query" . $e->getMessage());
+        }
+}
+
 ?>
 
 <!-- HEAD -->
@@ -41,10 +75,10 @@
                         <h2 class="text-4xl font-bold rotate-[-90deg]">Details</h2>
                     </div>
                     <div class="h-full w-[80%] bg-black text-white p-[1.5rem] grid grid-cols-2 rounded-r-lg">
-                        <p class="font-extrabold">ID:</p><p>3213213</p>
+                        <p class="font-extrabold">ID:</p><p><?=$accountDetails['userId']?></p>
                         <p class="font-extrabold">Date:</p><p>22/12/2000</p>
                         <p class="font-extrabold">Nationalite:</p><p>Deutsch</p>
-                        <p class="font-extrabold">Genre:</p><p>Femme</p>
+                        <p class="font-extrabold">Genre:</p><p><?=$accountDetails['gendre']?></p>
                     </div>
                 </div>
 
@@ -86,30 +120,14 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td class="border-black border-2">99400242</td>
-                                    <td class="border-black border-2">100000</td>
-                                    <td class="border-black border-2">EUR</td>
-                                    <td class="border-black border-2">334324434</td>
-                                </tr>
-                                <tr>
-                                    <td class="border-black border-2">99400242</td>
-                                    <td class="border-black border-2">100000</td>
-                                    <td class="border-black border-2">EUR</td>
-                                    <td class="border-black border-2">334324434</td>
-                                </tr>
-                                <tr>
-                                    <td class="border-black border-2">99400242</td>
-                                    <td class="border-black border-2">100000</td>
-                                    <td class="border-black border-2">EUR</td>
-                                    <td class="border-black border-2">334324434</td>
-                                </tr>
-                                <tr>
-                                    <td class="border-black border-2">99400242</td>
-                                    <td class="border-black border-2">100000</td>
-                                    <td class="border-black border-2">EUR</td>
-                                    <td class="border-black border-2">334324434</td>
-                                </tr>
+                                <?php foreach($accountsOfUser as $account): ?>
+                                    <tr>
+                                        <td class="border-black border-2"><?=$account['accountId']?></td>
+                                        <td class="border-black border-2"><?=$account['balance']?></td>
+                                        <td class="border-black border-2">EUR</td>
+                                        <td class="border-black border-2"><?=$account['RIB']?></td>
+                                    </tr>
+                                <?php endforeach; ?>
                             </tbody>
                         </table>
                     </div>
@@ -128,26 +146,13 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td class="border-black border-2">99400242</td>
-                                    <td class="border-black border-2">100000</td>
-                                    <td class="border-black border-2">Debit</td>
-                                </tr>
-                                <tr>
-                                    <td class="border-black border-2">99400242</td>
-                                    <td class="border-black border-2">100000</td>
-                                    <td class="border-black border-2">Credit</td>
-                                </tr>
-                                <tr>
-                                    <td class="border-black border-2">99400242</td>
-                                    <td class="border-black border-2">100000</td>
-                                    <td class="border-black border-2">Credit</td>
-                                </tr>
-                                <tr>
-                                    <td class="border-black border-2">99400242</td>
-                                    <td class="border-black border-2">100000</td>
-                                    <td class="border-black border-2">Debit</td>
-                                </tr>
+                            <?php foreach($transactionsOfAccount as $transaction): ?>
+                                    <tr>
+                                        <td class="border-black border-2"><?=$transaction['transactionId']?></td>
+                                        <td class="border-black border-2"><?=$transaction['amount']?></td>
+                                        <td class="border-black border-2"><?=$transaction['type']?></td>
+                                    </tr>
+                                <?php endforeach; ?>
                             </tbody>
                         </table>
                     </div>
